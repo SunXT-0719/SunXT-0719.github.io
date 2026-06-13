@@ -22,6 +22,7 @@
   function initTheme() {
     var STORAGE_KEY = 'theme-preference';
     var toggle = document.getElementById('themeToggle');
+    if (!toggle) return;
     var html = document.documentElement;
 
     function getSystemTheme() {
@@ -120,39 +121,33 @@
         var current = document.activeElement;
         if (!current || !current.classList.contains('tab-btn')) return;
 
+        var idx = Array.prototype.indexOf.call(tabButtons, current);
+        if (idx === -1) return;
+
         var target = null;
-        var firstBtn = tabButtons[0];
-        var lastBtn = tabButtons[tabButtons.length - 1];
+        var lastIdx = tabButtons.length - 1;
 
         switch (e.key) {
           case 'ArrowLeft':
           case 'ArrowUp':
             e.preventDefault();
-            target =
-              current.previousElementSibling &&
-              current.previousElementSibling.classList.contains('tab-btn')
-                ? current.previousElementSibling
-                : lastBtn;
+            target = tabButtons[idx === 0 ? lastIdx : idx - 1];
             break;
 
           case 'ArrowRight':
           case 'ArrowDown':
             e.preventDefault();
-            target =
-              current.nextElementSibling &&
-              current.nextElementSibling.classList.contains('tab-btn')
-                ? current.nextElementSibling
-                : firstBtn;
+            target = tabButtons[idx === lastIdx ? 0 : idx + 1];
             break;
 
           case 'Home':
             e.preventDefault();
-            target = firstBtn;
+            target = tabButtons[0];
             break;
 
           case 'End':
             e.preventDefault();
-            target = lastBtn;
+            target = tabButtons[lastIdx];
             break;
         }
 
@@ -180,6 +175,12 @@
   function initScrollReveal() {
     var revealElements = document.querySelectorAll('.reveal');
     if (revealElements.length === 0) return;
+
+    // Respect user's reduced motion preference (WCAG 2.2)
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      revealElements.forEach(function (el) { el.classList.add('visible'); });
+      return;
+    }
 
     var OFFSET = 80; // pixels from bottom of viewport to trigger early
 
