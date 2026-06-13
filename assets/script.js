@@ -13,8 +13,28 @@
   function init() {
     initTheme();
     initTabs();
-    initScrollReveal();
-    initLightbox();
+    loadSections().then(function () {
+      initScrollReveal();
+      initLightbox();
+    });
+  }
+
+  function loadSections() {
+    var sections = [
+      { id: 'tab-about', file: 'sections/about.html' },
+      { id: 'tab-blog', file: 'sections/blog.html' }
+    ];
+    return Promise.all(sections.map(function (s) {
+      return fetch(s.file)
+        .then(function (r) { return r.text(); })
+        .then(function (html) {
+          var panel = document.getElementById(s.id);
+          if (panel) panel.innerHTML = html;
+        })
+        .catch(function () {
+          // Section file not found — leave panel empty
+        });
+    }));
   }
 
   /* ===================================================
