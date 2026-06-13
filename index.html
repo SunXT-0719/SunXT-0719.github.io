@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>个人主页</title>
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+  <!-- Top Bar -->
+  <header class="top-bar">
+    <span class="site-name">SunXT</span>
+    <div class="top-bar-right">
+      <button class="theme-toggle" id="themeToggle" aria-label="切换主题">🌙</button>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="main-container">
+    <!-- Tab Navigation -->
+    <nav class="tab-nav" role="tablist">
+      <button class="tab-btn active" role="tab" data-tab="about">个人简介</button>
+      <button class="tab-btn" role="tab" data-tab="blog">Blog</button>
+    </nav>
+
+    <!-- ==================== About Tab ==================== -->
+    <section class="tab-content active" id="tab-about" role="tabpanel">
+      <!-- Hero -->
+      <div class="card hero reveal">
+        <img class="avatar" src="assets/images/avatar.svg" alt="头像">
+        <h1 class="hero-name">你的名字</h1>
+        <p class="hero-tagline">一句话介绍 · 你在这里</p>
+      </div>
+
+      <!-- About Me -->
+      <div class="card reveal">
+        <div class="card-title">关于我</div>
+        <div class="about-text">
+          <p>在这里写上你的自我介绍。可以是一段较长篇幅的文字，介绍你的背景、兴趣、在做的事情、或者任何你想和访客分享的内容。这个区域专门为充分表达而设计，希望能让人更好地了解你。</p>
+          <p>可以分段写。谈谈你的经历、你的想法、你的热情所在。如果你在某个领域有所建树或者独特的见解，可以在这里展开聊聊。</p>
+        </div>
+      </div>
+
+      <!-- Projects -->
+      <div class="card reveal">
+        <div class="card-title">项目</div>
+        <div class="project-list">
+          <div class="card project-item">
+            <div class="project-name">项目名称</div>
+            <div class="project-desc">项目的简短描述，说明它做了什么、解决了什么问题。</div>
+            <a class="project-link" href="#" target="_blank" rel="noopener">查看项目 →</a>
+          </div>
+          <div class="card project-item">
+            <div class="project-name">另一个项目</div>
+            <div class="project-desc">同样简短的描述。建议放 2-4 个精选项目即可。</div>
+            <a class="project-link" href="#" target="_blank" rel="noopener">查看项目 →</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Contact -->
+      <div class="card reveal">
+        <div class="card-title">联系方式</div>
+        <div class="contact-links">
+          <a class="contact-link" href="https://github.com/SunXT-0719" target="_blank" rel="noopener">
+            <span class="contact-icon">⌘</span> GitHub
+          </a>
+          <a class="contact-link" href="mailto:your-email@example.com">
+            <span class="contact-icon">✉</span> Email
+          </a>
+        </div>
+      </div>
+
+      <div class="footer">
+        <p>&copy; 2026 SunXT</p>
+      </div>
+    </section>
+
+    <!-- ==================== Blog Tab ==================== -->
+    <section class="tab-content" id="tab-blog" role="tabpanel">
+      <div class="blog-list">
+        <a class="card blog-item reveal" href="blog/post-1.html">
+          <img class="blog-item-image" src="assets/images/blog-placeholder.svg" alt="文章封面">
+          <div class="blog-item-body">
+            <div class="blog-item-date">2026-06-14</div>
+            <div class="blog-item-title">示例文章标题</div>
+            <div class="blog-item-excerpt">这是一篇示例文章的摘要，简要概括文章内容。点击进入阅读全文。</div>
+          </div>
+        </a>
+      </div>
+
+      <div class="footer">
+        <p>&copy; 2026 SunXT</p>
+      </div>
+    </section>
+  </main>
+
+  <script src="assets/script.js"></script>
+</body>
+</html>
