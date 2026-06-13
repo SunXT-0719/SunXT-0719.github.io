@@ -103,7 +103,7 @@
 
       // Update URL hash without causing a scroll jump
       if (window.location.hash !== '#' + tabId) {
-        history.pushState(null, '', '#' + tabId);
+        history.replaceState(null, '', '#' + tabId);
       }
     }
 
