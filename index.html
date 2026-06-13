@@ -19,12 +19,12 @@
   <main class="main-container">
     <!-- Tab Navigation -->
     <nav class="tab-nav" role="tablist">
-      <button class="tab-btn active" role="tab" data-tab="about">个人简介</button>
-      <button class="tab-btn" role="tab" data-tab="blog">Blog</button>
+      <button class="tab-btn active" role="tab" id="tab-btn-about" data-tab="about" aria-selected="true" aria-controls="tab-about">个人简介</button>
+      <button class="tab-btn" role="tab" id="tab-btn-blog" data-tab="blog" aria-selected="false" aria-controls="tab-blog">Blog</button>
     </nav>
 
     <!-- ==================== About Tab ==================== -->
-    <section class="tab-content active" id="tab-about" role="tabpanel">
+    <section class="tab-content active" id="tab-about" role="tabpanel" aria-labelledby="tab-btn-about">
       <!-- Hero -->
       <div class="card hero reveal">
         <img class="avatar" src="assets/images/avatar.svg" alt="头像">
@@ -70,14 +70,10 @@
           </a>
         </div>
       </div>
-
-      <div class="footer">
-        <p>&copy; 2026 SunXT</p>
-      </div>
     </section>
 
     <!-- ==================== Blog Tab ==================== -->
-    <section class="tab-content" id="tab-blog" role="tabpanel">
+    <section class="tab-content" id="tab-blog" role="tabpanel" aria-labelledby="tab-btn-blog">
       <div class="blog-list">
         <a class="card blog-item reveal" href="blog/post-1.html">
           <img class="blog-item-image" src="assets/images/blog-placeholder.svg" alt="文章封面">
@@ -88,12 +84,12 @@
           </div>
         </a>
       </div>
-
-      <div class="footer">
-        <p>&copy; 2026 SunXT</p>
-      </div>
     </section>
   </main>
+
+  <footer class="footer">
+    <p>&copy; 2026 SunXT</p>
+  </footer>
 
   <script src="assets/script.js"></script>
 </body>
