@@ -14,6 +14,7 @@
     initTheme();
     initTabs();
     initScrollReveal();
+    initLightbox();
   }
 
   /* ===================================================
@@ -223,5 +224,27 @@
 
     // Reveal elements already in view on page load
     checkVisibility();
+  }
+
+  /* ===================================================
+     4. Lightbox
+     =================================================== */
+  function initLightbox() {
+    var lightbox = document.getElementById('lightbox');
+    var lightboxImg = document.getElementById('lightbox-img');
+    var avatarLink = document.querySelector('.avatar-link');
+    var avatarImg = document.querySelector('.avatar');
+
+    if (!lightbox || !avatarLink || !avatarImg) return;
+
+    avatarLink.addEventListener('click', function (e) {
+      e.preventDefault();
+      lightboxImg.src = avatarImg.src;
+      lightbox.classList.add('open');
+    });
+
+    lightbox.addEventListener('click', function () {
+      lightbox.classList.remove('open');
+    });
   }
 })();

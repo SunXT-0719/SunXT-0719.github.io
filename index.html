@@ -4,15 +4,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>个人主页</title>
+  <link rel="icon" href="assets/images/avatar.jpg">
   <link rel="stylesheet" href="assets/style.css">
 </head>
 <body>
   <!-- Top Bar -->
   <header class="top-bar">
-    <span class="site-name">SunXT</span>
-    <div class="top-bar-right">
-      <button class="theme-toggle" id="themeToggle" aria-label="切换主题">🌙</button>
-    </div>
+    <span class="site-name">SunXT's Homepage</span>
   </header>
 
   <!-- Main Content -->
@@ -27,17 +25,50 @@
     <section class="tab-content active" id="tab-about" role="tabpanel" aria-labelledby="tab-btn-about">
       <!-- Hero -->
       <div class="card hero reveal">
-        <img class="avatar" src="assets/images/avatar.svg" alt="头像">
-        <h1 class="hero-name">你的名字</h1>
-        <p class="hero-tagline">一句话介绍 · 你在这里</p>
+        <a class="avatar-link" href="#"><img class="avatar" src="assets/images/avatar.jpg" alt="头像"></a>
+        <h1 class="hero-name">SunXT</h1>
+        <p class="hero-tagline">你所热爱的，就是你的生活</p>
       </div>
 
       <!-- About Me -->
       <div class="card reveal">
         <div class="card-title">关于我</div>
         <div class="about-text">
-          <p>在这里写上你的自我介绍。可以是一段较长篇幅的文字，介绍你的背景、兴趣、在做的事情、或者任何你想和访客分享的内容。这个区域专门为充分表达而设计，希望能让人更好地了解你。</p>
-          <p>可以分段写。谈谈你的经历、你的想法、你的热情所在。如果你在某个领域有所建树或者独特的见解，可以在这里展开聊聊。</p>
+          <p class="about-section-label">一个除了学习什么都喜欢一点的鼠鼠</p>
+
+           <hr class="about-divider">
+
+          <p class="about-section-label">教育经历</p>
+          <p class="text-sm">2011–2017 · 北京市民族团结小学 ~ 北京市第二实验小学（同一个学校，中间合并了）</p>
+          <p class="text-sm">2017–2020 · 北京市第七中学</p>
+          <p class="text-sm">2020–2023 · 北京市第八中学</p>
+          <p class="text-sm">2023–2027 · 北京大学信息科学技术学院 计算机科学与技术专业</p>
+          <p class="text-sm">（或许）2027–? · 北京大学计算机学院</p>
+
+          <hr class="about-divider">
+
+          <p class="about-section-label">兴趣爱好</p>
+
+          <p class="text-sm"><span class="tag">FPS</span> 2021年入坑 CS:GO，steam 时长 1300+h，5E、完美 A，不打官匹。2021 斯德哥尔摩 Major 入坑 CS 赛事，2022 安特卫普Major冠军粉，FaZe up。</p>
+
+          <p class="text-sm"><span class="tag">FTG</span> GGST 入坑，ra 使。现在主玩街霸 6，12 个大师角色，0 正分，朝着随机大师和一个 1700+ 角色努力中。比赛最好成绩：2026 CPTWW1 129/330 名。</p>
+
+          <p class="text-sm"><span class="tag">音游</span> Phigros 入坑，rks 15.24。现在专攻舞萌，目前 W42，目标有生之年能上彩框。</p>
+
+          <p class="text-sm"><span class="tag">动画</span> 看的第一部动画是 2013 年的《弹丸论破》，入宅作是 2014 年的《斩！赤红之瞳》。最喜欢的 TV 动画是《钢之炼金术师 FA》和《乒乓》，最喜欢的动画电影是《你的名字》和《千年女优》。现在只是一个每个月都会看点新番的普通阿宅。</p>
+
+          <p class="text-sm"><span class="tag">Galgame</span> 玩的不多，入坑作是《魔女的夜宴》，最喜欢的作品是《美好的每一天：不连续的存在》，这个网页的背景就是《素晴日》的水上由岐（官方周年贺图），头像是和素晴日近似世界观的《终之空Remake》的音无彩名。</p>
+
+          <p class="text-sm"><span class="tag">困难游戏爱好者</span> FS 社 PC 平台全通关；空洞骑士、丝之歌全成就；茶杯头全通关；蔚蓝全成就，正在攻克酱三（无限期搁置中）。</p>
+
+          <p class="text-sm"><span class="tag">弹丸论破</span> 弹丸论破系列死忠粉。如果从接触的所有游戏动画作品中选一个最喜欢的，我会选《超级弹丸论破 2》。暂时的人生目标是活到《弹丸论破 2×2》发售。</p>
+          
+          <p class="text-sm"><span class="tag">日语</span> 兴趣使然学的二外，N2水平，口语下手。</p>
+
+          <hr class="about-divider">
+
+          <p class="about-section-label">专业方向</p>
+          <p class="text-sm">大模型高效计算，计算机体系结构。计划毕业后进入 PKU DASYS 实验室读博。现在喜欢用 AI agent 搓点小玩具（包括这个网页）。</p>
         </div>
       </div>
 
@@ -46,27 +77,53 @@
         <div class="card-title">项目</div>
         <div class="project-list">
           <div class="card project-item">
-            <div class="project-name">项目名称</div>
-            <div class="project-desc">项目的简短描述，说明它做了什么、解决了什么问题。</div>
-            <a class="project-link" href="#" target="_blank" rel="noopener">查看项目 →</a>
+            <div class="project-name">simple-claude-code-statusline</div>
+            <div class="project-desc">一个简单的针对接入第三方api设计的claude code状态栏插件</div>
+            <a class="project-link" href="https://github.com/SunXT-0719/simple-claude-code-statusline" target="_blank" rel="noopener">查看项目 →</a>
           </div>
           <div class="card project-item">
-            <div class="project-name">另一个项目</div>
-            <div class="project-desc">同样简短的描述。建议放 2-4 个精选项目即可。</div>
-            <a class="project-link" href="#" target="_blank" rel="noopener">查看项目 →</a>
+            <div class="project-name">wechat-bot</div>
+            <div class="project-desc">基于窗口识别和模拟键盘操作的微信群聊bot</div>
+            <a class="project-link" href="https://github.com/SunXT-0719/wechat-bot" target="_blank" rel="noopener">查看项目 →</a>
           </div>
         </div>
       </div>
 
       <!-- Contact -->
       <div class="card reveal">
-        <div class="card-title">联系方式</div>
+        <div class="card-title">联系方式与其他平台主页</div>
         <div class="contact-links">
           <a class="contact-link" href="https://github.com/SunXT-0719" target="_blank" rel="noopener">
-            <span class="contact-icon">⌘</span> GitHub
+            <svg class="contact-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+            GitHub
           </a>
-          <a class="contact-link" href="mailto:your-email@example.com">
-            <span class="contact-icon">✉</span> Email
+          <span class="contact-link">
+            <span class="contact-icon">🐧</span> QQ 1781231932
+          </span>
+          <span class="contact-link">
+            <span class="contact-icon">💬</span> 微信 s123456791012
+          </span>
+          <a class="contact-link" href="mailto:1781231932@qq.com">
+            <span class="contact-icon">✉️</span> QQ邮箱（随意联系）
+          </a>
+          <a class="contact-link" href="mailto:2300013081@stu.pku.edu.cn">
+            <span class="contact-icon">✉️</span> PKU学生邮箱（严肃问题专供）
+          </a>
+          <a class="contact-link" href="https://steamcommunity.com/profiles/76561199075476952/">
+            <img class="contact-icon" src="assets/icons/steam.png" alt="">
+            Steam
+          </a>
+          <a class="contact-link" href="https://space.bilibili.com/16801230" target="_blank" rel="noopener">
+            <img class="contact-icon" src="https://www.bilibili.com/favicon.ico" alt="">
+            Bilibili
+          </a>
+          <a class="contact-link" href="https://bgm.tv/user/605301" target="_blank" rel="noopener">
+            <img class="contact-icon" src="assets/icons/bangumi.webp" alt="">
+            Bangumi
+          </a>
+          <a class="contact-link" href="https://music.163.com/#/user/home?id=353801924" target="_blank" rel="noopener">
+            <img class="contact-icon" src="https://music.163.com/favicon.ico" alt="">
+            网易云音乐
           </a>
         </div>
       </div>
@@ -75,12 +132,11 @@
     <!-- ==================== Blog Tab ==================== -->
     <section class="tab-content" id="tab-blog" role="tabpanel" aria-labelledby="tab-btn-blog">
       <div class="blog-list">
-        <a class="card blog-item reveal" href="blog/post-1.html">
-          <img class="blog-item-image" src="assets/images/blog-placeholder.svg" alt="文章封面">
+        <a class="card blog-item reveal" href="blog/post-2.html">
           <div class="blog-item-body">
             <div class="blog-item-date">2026-06-14</div>
-            <div class="blog-item-title">示例文章标题</div>
-            <div class="blog-item-excerpt">这是一篇示例文章的摘要，简要概括文章内容。点击进入阅读全文。</div>
+            <div class="blog-item-title">自己紹介 - SunXT</div>
+            <div class="blog-item-excerpt">test blog</div>
           </div>
         </a>
       </div>
@@ -90,6 +146,11 @@
   <footer class="footer">
     <p>&copy; 2026 SunXT</p>
   </footer>
+
+  <!-- Lightbox Overlay -->
+  <div id="lightbox" class="lightbox">
+    <img id="lightbox-img" src="" alt="头像大图">
+  </div>
 
   <script src="assets/script.js"></script>
 </body>
