@@ -6,6 +6,7 @@
   <title>SunXT's Homepage</title>
   <link rel="icon" href="assets/images/avatar.jpg">
   <link rel="stylesheet" href="assets/style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer@1/dist/APlayer.min.css">
 </head>
 <body>
   <!-- Top Bar -->
@@ -33,11 +34,158 @@
     <p>&copy; 2026 SunXT</p>
   </footer>
 
+  <!-- Side Panel -->
+  <aside class="side-panel">
+    <!-- Music Widget -->
+    <div class="side-widget player-widget" id="playerWidget">
+      <!-- Hidden APlayer slots (backend only) -->
+      <div class="player-aplayer-wrap" style="display:none">
+        <div class="aplayer-slot active" id="pl-favorite">
+          <meting-js server="netease" type="playlist" id="497691453"
+            autoplay="false" loop="all" order="list" preload="none"
+            list-folded="true" lrc-type="0" list-max-height="300px">
+          </meting-js>
+        </div>
+        <div class="aplayer-slot" id="pl-subahibi">
+          <meting-js server="netease" type="playlist" id="141293294"
+            autoplay="false" loop="all" order="list" preload="none"
+            list-folded="true" lrc-type="0" list-max-height="300px">
+          </meting-js>
+        </div>
+      </div>
+
+      <!-- Custom Player UI -->
+      <div class="player-custom-ui" id="playerCustomUI">
+        <!-- 1. Title bar -->
+        <div class="player-header">
+          <span class="player-header-bar"></span>
+          <span class="player-header-text">音乐</span>
+        </div>
+
+        <!-- 2. Song info row -->
+        <div class="player-song-row">
+          <div class="player-cover-wrap">
+            <img class="player-cover" id="playerCover" src="" alt="专辑封面">
+          </div>
+          <div class="player-song-info">
+            <span class="player-song-name" id="playerSongName">未选择歌曲</span>
+            <span class="player-song-artist" id="playerSongArtist">--</span>
+          </div>
+          <!-- Status icon: music note when playing, pause bars when stopped -->
+          <span class="player-status-icon" id="playerStatusIcon" title="播放状态">
+            <svg class="pl-icon-paused" viewBox="0 0 24 24" width="18" height="18" fill="currentColor" opacity="0.6">
+              <rect x="6" y="4" width="4" height="16" rx="1"/>
+              <rect x="14" y="4" width="4" height="16" rx="1"/>
+            </svg>
+            <svg class="pl-icon-playing" viewBox="0 0 24 24" width="18" height="18" fill="currentColor" opacity="0.6" style="display:none">
+              <path d="M9 18V6l7 6z"/>
+            </svg>
+          </span>
+        </div>
+
+        <!-- 3. Time & Volume row -->
+        <div class="player-time-vol-row">
+          <span class="player-time" id="playerTime">00:00 / 00:00</span>
+          <span class="player-volume-icon" id="playerVolumeIcon" title="静音/取消静音">
+            <!-- Volume-high (default) -->
+            <svg class="pl-vol-high" viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+              <polygon points="11,5 6,9 2,9 2,15 6,15 11,19 11,5"/>
+              <path d="M15.54 8.46a5.47 5.47 0 0 1 0 7.07" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              <path d="M19.07 4.93a10.2 10.2 0 0 1 0 14.14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+            <!-- Volume-low -->
+            <svg class="pl-vol-low" viewBox="0 0 24 24" width="16" height="16" fill="currentColor" style="display:none">
+              <polygon points="11,5 6,9 2,9 2,15 6,15 11,19 11,5"/>
+              <path d="M15.54 8.46a5.47 5.47 0 0 1 0 7.07" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+            <!-- Volume-muted -->
+            <svg class="pl-vol-muted" viewBox="0 0 24 24" width="16" height="16" fill="currentColor" style="display:none">
+              <polygon points="11,5 6,9 2,9 2,15 6,15 11,19 11,5"/>
+              <line x1="23" y1="9" x2="17" y2="15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              <line x1="17" y1="9" x2="23" y2="15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </span>
+          <div class="player-volume-bar-wrap" id="playerVolumeBarWrap">
+            <div class="player-volume-bar" id="playerVolumeBar">
+              <span class="player-volume-thumb" id="playerVolumeThumb"></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4. Main progress bar -->
+        <div class="player-progress-wrap" id="playerProgressWrap">
+          <div class="player-progress-bar" id="playerProgressBar">
+            <span class="player-progress-thumb" id="playerProgressThumb"></span>
+          </div>
+        </div>
+
+        <!-- 5. Control buttons -->
+        <div class="player-controls">
+          <div class="player-pl-switch">
+            <button class="player-ctrl-btn" id="plToggleBtn" title="切换歌单">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                <circle cx="12" cy="12" r="3"/>
+                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+              </svg>
+            </button>
+            <div class="pl-inline-dropdown" id="plDropdownList" style="display:none">
+              <button class="pl-option active" data-pl="favorite">SunXT喜欢的音乐</button>
+              <button class="pl-option" data-pl="subahibi">素晴日OST</button>
+            </div>
+          </div>
+          <button class="player-ctrl-btn" id="btnPrev" title="上一首">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor">
+              <polygon points="14,5 7,12 14,19"/>
+              <rect x="4" y="5" width="3" height="14" rx="1"/>
+            </svg>
+          </button>
+          <button class="player-ctrl-btn player-ctrl-main" id="btnPlay" title="播放">
+            <!-- Pause icon (shown when playing) -->
+            <svg class="pl-pause-icon" viewBox="0 0 24 24" width="20" height="20" fill="currentColor" style="display:none">
+              <rect x="6" y="4" width="5" height="16" rx="1"/>
+              <rect x="13" y="4" width="5" height="16" rx="1"/>
+            </svg>
+            <!-- Play icon (shown when paused) -->
+            <svg class="pl-play-icon" viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+              <polygon points="8,5 19,12 8,19"/>
+            </svg>
+          </button>
+          <button class="player-ctrl-btn" id="btnNext" title="下一首">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor">
+              <polygon points="10,5 17,12 10,19"/>
+              <rect x="17" y="5" width="3" height="14" rx="1"/>
+            </svg>
+          </button>
+          <button class="player-ctrl-btn" id="btnList" title="播放列表">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+              <line x1="3" y1="6" x2="21" y2="6"/>
+              <line x1="3" y1="12" x2="21" y2="12"/>
+              <line x1="3" y1="18" x2="21" y2="18"/>
+            </svg>
+          </button>
+        </div>
+
+        <!-- Playlist panel (hidden by default) -->
+        <div class="player-list-panel" id="playerListPanel" style="display:none">
+          <ol class="player-list-ol" id="playerListOl"></ol>
+        </div>
+      </div>
+
+      <!-- Loading / Error status -->
+      <div class="player-status" id="playerStatus">
+        <span class="player-status-loading"><span class="player-spinner"></span>加载中…</span>
+        <span class="player-status-error" style="display:none">⚠️ 加载失败 <button class="player-retry-btn">重试</button></span>
+      </div>
+    </div>
+  </aside>
+
   <!-- Lightbox Overlay -->
   <div id="lightbox" class="lightbox">
     <img id="lightbox-img" src="" alt="头像大图">
   </div>
 
+  <script src="https://cdn.jsdelivr.net/npm/aplayer@1/dist/APlayer.min.js"></script>
   <script src="assets/script.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
 </body>
 </html>
