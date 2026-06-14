@@ -364,6 +364,16 @@ body {
   line-height: 1.5;
 }
 
+.project-inner-link {
+  color: var(--accent);
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.project-inner-link:hover {
+  text-decoration: underline;
+}
+
 @media (max-width: 480px) {
   .project-grid {
     grid-template-columns: 1fr;
