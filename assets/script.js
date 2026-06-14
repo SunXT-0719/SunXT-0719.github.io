@@ -235,6 +235,71 @@
         applyFilters();
       });
     }
+
+    /* ---- Dynamic blog loading: open posts in-page so music keeps playing ---- */
+    var blogTab = document.getElementById('tab-blog');
+    var blogListSaved = null;
+
+    function showBlogList() {
+      if (!blogTab || !blogListSaved) return;
+      blogTab.innerHTML = blogListSaved;
+      blogListSaved = null;
+      bindBlogItemClicks();
+      initBlogFilter();
+      history.replaceState(null, '', '#blog');
+    }
+
+    function bindBlogItemClicks() {
+      if (!blogTab) return;
+      var blogItems = blogTab.querySelectorAll('.blog-item');
+      blogItems.forEach(function (item) {
+        if (item.hasAttribute('data-spa-bound')) return;
+        item.setAttribute('data-spa-bound', '1');
+        item.addEventListener('click', function (e) {
+          e.preventDefault();
+          var href = item.getAttribute('href');
+          if (!href) return;
+
+          if (!blogListSaved) blogListSaved = blogTab.innerHTML;
+
+          blogTab.innerHTML = '<div class="blog-detail"><p style="text-align:center;color:var(--text-secondary);padding:40px">加载中…</p></div>';
+
+          fetch(href)
+            .then(function (r) { return r.text(); })
+            .then(function (html) {
+              var doc = new DOMParser().parseFromString(html, 'text/html');
+              var article = doc.querySelector('.blog-detail');
+              if (!article) { window.location.href = href; return; }
+
+              var title = doc.querySelector('title');
+              if (title) document.title = title.textContent;
+
+              blogTab.innerHTML = '<a class="back-link blog-spa-back" href="#">← 返回 Blog</a>' + article.outerHTML;
+
+              history.pushState(null, '', '#' + href.replace(/^blog\//, '').replace('.html', ''));
+
+              var spaBack = blogTab.querySelector('.blog-spa-back');
+              if (spaBack) {
+                spaBack.addEventListener('click', function (e2) {
+                  e2.preventDefault();
+                  showBlogList();
+                  document.title = "SunXT's Homepage";
+                });
+              }
+            })
+            .catch(function () { window.location.href = href; });
+        });
+      });
+    }
+
+    bindBlogItemClicks();
+
+    window.addEventListener('popstate', function () {
+      if (window.location.hash === '#blog' && blogListSaved) {
+        showBlogList();
+        document.title = "SunXT's Homepage";
+      }
+    });
   }
 
   /* ===================================================
