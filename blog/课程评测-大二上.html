@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>课程评测 · 大二上</title>
+<style>
+  :root {
+    --bg: #faf9f6;
+    --text: #2d2d2d;
+    --text-secondary: #6b6b6b;
+    --accent: #e8533f;
+    --border: #e8e4df;
+    --tag-bg: #f5f2ed;
+    --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: "Noto Serif SC", "Source Han Serif SC", "Songti SC", "STSong", "SimSun", "Hiragino Mincho ProN", "YuMincho", serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.85;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .hero {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 80px 24px 48px;
+    text-align: center;
+  }
+  .hero h1 {
+    font-size: 2.4rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    margin-bottom: 16px;
+    color: #1a1a1a;
+  }
+  .hero .subtitle {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    line-height: 1.7;
+  }
+
+  .section-divider {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 0 24px 40px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    letter-spacing: 0.06em;
+  }
+  .section-divider::before,
+  .section-divider::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+  .section-divider span { white-space: nowrap; }
+
+  .course-card {
+    max-width: 680px;
+    margin: 0 auto 48px;
+    padding: 0 24px;
+  }
+  .page-cover {
+    max-width: 680px;
+    margin: 0 auto 48px;
+    padding: 0 24px;
+  }
+  .page-cover-inner {
+    width: 100%;
+    aspect-ratio: 16 / 7;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #e8e4df 0%, #d5cfc7 30%, #c4bdb3 60%, #b8b0a5 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+    box-shadow: var(--shadow);
+  }
+  .page-cover-inner::after {
+    content: "📷 封面图片预留";
+    font-size: 0.9rem;
+    color: rgba(255,255,255,0.7);
+    letter-spacing: 0.08em;
+    font-family: "PingFang SC", "Noto Sans SC", "Microsoft YaHei", sans-serif;
+  }
+  .course-tag {
+    display: inline-block;
+    font-size: 0.75rem;
+    letter-spacing: 0.06em;
+    color: var(--accent);
+    background: var(--tag-bg);
+    padding: 3px 12px;
+    border-radius: 40px;
+    margin-bottom: 10px;
+    font-family: "PingFang SC", "Noto Sans SC", "Microsoft YaHei", sans-serif;
+  }
+  .course-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+    color: #1a1a1a;
+  }
+  .course-meta {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin-bottom: 24px;
+  }
+  .course-body { font-size: 0.98rem; line-height: 1.9; }
+  .course-body p { margin-bottom: 1em; }
+  .course-body .highlight-box {
+    background: #fdf6f0;
+    border-left: 3px solid var(--accent);
+    padding: 12px 16px;
+    margin: 20px 0;
+    border-radius: 0 8px 8px 0;
+    font-size: 0.93rem;
+  }
+  .course-body .ps { color: var(--text-secondary); font-size: 0.9rem; }
+
+  .footer {
+    text-align: center;
+    padding: 48px 24px 64px;
+    color: var(--text-secondary);
+    font-size: 0.8rem;
+    letter-spacing: 0.04em;
+  }
+
+  @media (max-width: 640px) {
+    .hero { padding: 48px 20px 32px; }
+    .hero h1 { font-size: 1.8rem; }
+    .course-card { padding: 0 16px; margin-bottom: 36px; }
+    .page-cover-inner { aspect-ratio: 16 / 8; }
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <h1>大二上 · 课程评测</h1>
+  <p class="subtitle">
+    xk 大二菜鸡鼠鼠的课程评测洞<br>
+    主要评测我这学期上的三门比较有趣的通选及公选课，专业课由于我没怎么听过而且学的比较一般所以不会说得太详细而且参考价值不大<br>
+  </p>
+</header>
+
+<!-- 封面 -->
+<div class="page-cover">
+  <div class="page-cover-inner"></div>
+</div>
+
+
+<!-- 魅力化学 -->
+<article class="course-card">
+  <span class="course-tag">通选课</span>
+  <h2 class="course-title">魅力化学</h2>
+  <div class="course-meta">hjb · 得分 81</div>
+  <div class="course-body">
+    <p>这门课是我这学期上的最多的课应该没有之一，原因不是这课多有意思，而是每节课都有小测，不得不来（虽然如此dz还是缺了两次小测，一次是第二周不知道有小测，还有一次是期中考完ics脑子不清醒忘了有这门课）。课程内容方面，前两节课是hjb老师讲，基本都在讲段子www。后面每周都是不同的老师讲不同的主题，质量怎么说，比较参差不齐，有的老师讲的明显就比较无聊，没有什么魅力。小测的内容大部分都比较简单，上百度搜基本都有，不听讲座也没太大问题。期末要写一个论文，主题随便选，dz选了一个自认为还算符合课程主题的题目，但是没发挥好，寄了（主要还是语文太差了，实在写不出什么有魅力的文字），总评只有81，如果算上那两次没交的小测或许能刚好被正太？</p>
+    <p>关于任务量，这课大概是我上过任务量最小的课了，一学期只用写一篇论文，课上的小测几乎可以忽略不记。</p>
+    <p>还有一点，上这课的教室实在过于小，每节课教室后面地上都要坐一排人，而且通风很不好，极其闷热，受不了的慎选。</p>
+    <div class="highlight-box"><strong>总体评价：</strong>如果你语文好，擅长写论文并且能接受上课地点的问题，或者你只是想要一个任务量极小的课的话可以选，否则慎选。</div>
+  </div>
+</article>
+
+<!-- 游戏史 -->
+<article class="course-card">
+  <span class="course-tag">通选课</span>
+  <h2 class="course-title">电子游戏改造人类世界的历史 / 游戏史</h2>
+  <div class="course-meta">cq · 得分 84.5</div>
+  <div class="course-body">
+    <p>这是我这学期上的最开心的课，每周一都让我在经历了ics和魅力化学的双重折磨后给我带来一些精神慰藉。dz平时很喜欢打游戏，所以大一看到这个课名立马就决定选了（可惜当时晚上有习题课时间冲突了，这学期才选上）。但是需要提醒一点，这个课的内容主要是关于游戏的内涵表达，比较适合那些喜欢沉浸在游戏剧情里的剧情党玩家，而dz平时打的游戏要么是魂like这样轻剧情的arpg，要么就是cs街霸这种竞技游戏，最讨厌的就是看剧情（），所以做pre的时候感觉有点没话说，分析了一通游戏机制上的东西，貌似不是很符合老师的预期。上课的内容方面，前四节课是老师讲游戏的发展史，后面的课就是每周一个主题，老师先讲半小时，然后以小组为单位做pre，主题可以选老师分配好的（我一会贴一下这学期的主题，不保证和明年的一样），也可以自己想主题，形式不限，有技术力很高的大佬直接搓了个小游戏出来，很有趣。然后是期末作业，老师非常善解人意，ddl基本拖到了最晚，并且主打一个自由度，不限字数不限形式不限主题，dz依然打算写自己想写的游戏机制方面的分析，不知道最后能拿几分。但是不管怎么样，这是我上大学一年多以来，第一个有了想要自己想要的真实想法的课，就像cq老师最后一节课说的一样，这可能是我们一生为数不多的能够借着课堂的名义向台下的人安利自己喜欢的游戏的机会（不记得原话了，差不多是这个意思），因此我向所有喜欢游戏的同学推荐这门课。</p>
+    <div class="highlight-box"><strong>总体评价：</strong>一伯昏，非常推荐</div>
+    <p class="ps">PS：这学期的pre主题：1.当玩家戴上痛苦面具：我们到底为什么在玩游戏？2.凝视深渊：重审游戏中的道德与理性 3.超越生死之辨：游戏对生命观的诠解 4.玩梗的边界：重审游戏"二创"与社群文化 5.电子游戏身体与技术的媒介考古 6.电子游戏的全球史：讲述其他国家的游戏故事 7.跨服对话的可能性：游戏真的能作为文化传播的介质吗？8.装点抑或重塑："史入游戏"与"游戏注史"9.严肃游戏也配叫游戏吗？重审电子游戏的工具理性 10.从"头号玩家"到被游戏塑造的未来</p>
+    <p class="ps">再强调一点，这些主题只是个标题，到时候老师发的任务书里会详细阐释每一个主题，还有一些指导意见，方向不会限制的很死，自由发挥的空间很大，再不济你也能说你做的是自己的选题（bushi）</p>
+  </div>
+</article>
+
+<!-- 初级日语 -->
+<article class="course-card">
+  <span class="course-tag">公选课</span>
+  <h2 class="course-title">初级日语 / 公共基础日语 / 公基日</h2>
+  <div class="course-meta">得分 · 100</div>
+  <div class="course-body">
+    <p>在上学期的超低绩点打击之后，dz决定狠狠刷分，于是投了大量意愿点选上了这门超级难选的课，最终收获大学第一门90+的课，给了菜鸡dz极大的鼓励。</p>
+    <p>dz看动画片看了有十年多了，从小到大听日语的时间怕是比听英语的时间还长，所以听力和词汇量有一些优势，这门课上的就比较轻松。虽然如此，由于没系统性的学过日语，在学动词变形的时候还是吃了一点苦头的（指不知道小测时间裸考喜提60+）。但是好在小测分段给分很宽松，一学期三次小测，考察最近三四课的知识点，且都是书上的内容，一次占总评10分，卷面60-给6分，60~80给8分，80+给十分。另外还可以选择发表（pre），最多可以给5分的加分，用中文和日语讲都可以，但我觉得穿插一点日语分可能会更高。主题选什么都可以，有的专业性很强，比如日本经济、历史之类的，没有这方面的基础的也不用担心，介绍点自己喜欢的东西就可以，dz讲的就是和动画制作有关的内容，没怎么查资料全凭印象流一通乱讲，总之我觉得发表性价比很高，好像最少也能加3分的样子？要想拿高分这些加分还是很关键的。</p>
+    <p>最后的期末考试占比50%，基本都是课本的知识点，老师课上讲的额外的语法点好像涉及的不是很多，题量不是很大，有不少提前交卷的，但是翻译个人觉得有点难（私翻译本当苦手desu），卷面想拿满分还是相当有难度的，更体现了发表的重要性。</p>
+    <p>再说一下课堂部分，这个课是两个老师轮流上，我们班的两个老师都很nice，但是可能是因为教学经验不太足，有时候上课声音有点小，但是老师还是很负责的，有问题下课可以找老师问。课上会随机点名回答问题，好像不在的会被老师做标记，扣不扣平时分就不知道了，所以最好还是每节课都去上一下，回答问题错了也不要紧，至少这一块的知识点你会印象特别深。</p>
+    <p>最后说一下学这门课的建议，如果是零基础的同学，建议在上课前先自学一下五十音图，保证上课能跟上进度，还有要每次课学的单词要及时巩固，最后就是老生常谈的多听多看。有基础的就不用说了，你现在的首要目标是allin意愿点选上课，然后就可以爽爽刷分了。</p>
+    <div class="highlight-box"><strong>总体评价：</strong>任务量低，给分超好，并且学完以后百分百会有收获，但由于这课一周6课时，但只有3学分，并且选课难度很大，所以allin的时候要慎重考虑</div>
+  </div>
+</article>
+
+
+<!-- 离散数学 -->
+<article class="course-card">
+  <span class="course-tag">专业课</span>
+  <h2 class="course-title">离散数学</h2>
+  <div class="course-meta">cyz · 得分 81</div>
+  <div class="course-body">
+    <p>说实话这个得分真的挺出乎我意料的，dz这个课全靠考试前突击，作业基本靠抄答案，期中没上中位数，期末更是重量级，一半的题都不会做，真实卷面分可能都没及格，最后给捞到了81（看统分洞好像大部分人觉得没有太捞，也可能是dz狗运发力蒙对的比较多吧）</p>
+    <p>再来说说课程本身，这个课我感觉是上过的信科专业课里课程安排最勾使的一档了，超级大杂烩，3学分的课涵盖了十几学分的课的知识点，但是都讲的不怎么深，反正我上完这课几乎没有什么收获，挺意义不明的一门课（也可能是dz菜）。</p>
+    <p>任务量方面，每周交一次作业，并且第一节课就会告诉我们每章的作业是哪些题，可以提前做。作业的难度偏低，前几章的作业基本就是小学生掰手指数数的水平，和考试完全不是一个量级。另外由于这课是新开的，往年提资料很少，复习起来也比较麻烦。</p>
+    <p>最后告诫同学们，千万不要像dz一样平时不学，期末真的复习不过来，知识量太大了。</p>
+    <div class="highlight-box"><strong>总体评价：</strong>史，但是专业课有什么办法呢，捏着鼻子嗯造就完事了。</div>
+  </div>
+</article>
+
+<!-- ics -->
+<article class="course-card">
+  <span class="course-tag">专业课</span>
+  <h2 class="course-title">ICS / 计算机系统导论</h2>
+  <div class="course-body">
+
+  </div>
+</article>
+
+<!-- 数据结构与算法A -->
+<article class="course-card">
+  <span class="course-tag">专业课</span>
+  <h2 class="course-title">数据结构与算法A / 数算A</h2>
+  <div class="course-body">
+  </div>
+</article>
+
+</body>
+</html>

@@ -1,0 +1,24 @@
+@font-face {
+  font-family: "icomoon"; /* Project id  */
+  src: url('iconfont.ttf?t=1734441431787') format('truetype');
+}
+
+.icon {
+  font-family: 'icomoon' !important;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  vertical-align: -.0625em;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-jinzhi:before {
+  content: "\e661";
+}
+
