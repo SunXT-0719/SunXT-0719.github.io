@@ -1,258 +1,128 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>课程评测 · 大三上</title>
-<style>
-  :root {
-    --bg: #faf9f6;
-    --text: #2d2d2d;
-    --text-secondary: #6b6b6b;
-    --accent: #4a8c6f;
-    --border: #e8e4df;
-    --tag-bg: #f2f6f3;
-    --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
-  }
-
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-
-  body {
-    font-family: "Noto Serif SC", "Source Han Serif SC", "Songti SC", "STSong", "SimSun", "Hiragino Mincho ProN", "YuMincho", serif;
-    background: var(--bg);
-    color: var(--text);
-    line-height: 1.85;
-    -webkit-font-smoothing: antialiased;
-  }
-
-  .hero {
-    max-width: 720px;
-    margin: 0 auto;
-    padding: 80px 24px 48px;
-    text-align: center;
-  }
-  .hero h1 {
-    font-size: 2.4rem;
-    font-weight: 700;
-    letter-spacing: 0.04em;
-    margin-bottom: 16px;
-    color: #1a1a1a;
-  }
-  .hero .subtitle {
-    font-size: 1rem;
-    color: var(--text-secondary);
-    line-height: 1.7;
-  }
-
-  .section-divider {
-    max-width: 680px;
-    margin: 0 auto;
-    padding: 0 24px 40px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    color: var(--text-secondary);
-    font-size: 0.85rem;
-    letter-spacing: 0.06em;
-  }
-  .section-divider::before,
-  .section-divider::after {
-    content: "";
-    flex: 1;
-    height: 1px;
-    background: var(--border);
-  }
-  .section-divider span { white-space: nowrap; }
-
-  .course-card {
-    max-width: 680px;
-    margin: 0 auto 48px;
-    padding: 0 24px;
-  }
-  .page-cover {
-    max-width: 680px;
-    margin: 0 auto 48px;
-    padding: 0 24px;
-  }
-  .page-cover-inner {
-    width: 100%;
-    aspect-ratio: 16 / 7;
-    border-radius: 12px;
-    background: url('../assets/images/covers/cover4.jpg') center/cover;
-    overflow: hidden;
-    box-shadow: var(--shadow);
-  }
-  .course-tag {
-    display: inline-block;
-    font-size: 0.75rem;
-    letter-spacing: 0.06em;
-    color: var(--accent);
-    background: var(--tag-bg);
-    padding: 3px 12px;
-    border-radius: 40px;
-    margin-bottom: 10px;
-    font-family: "PingFang SC", "Noto Sans SC", "Microsoft YaHei", sans-serif;
-  }
-  .course-title {
-    font-size: 1.5rem;
-    font-weight: 700;
-    margin-bottom: 6px;
-    color: #1a1a1a;
-  }
-  .course-meta {
-    font-size: 0.85rem;
-    color: var(--text-secondary);
-    margin-bottom: 24px;
-  }
-  .course-body { font-size: 0.98rem; line-height: 1.9; }
-  .course-body p { margin-bottom: 1em; }
-  .course-body .highlight-box {
-    background: #f2f6f3;
-    border-left: 3px solid var(--accent);
-    padding: 12px 16px;
-    margin: 20px 0;
-    border-radius: 0 8px 8px 0;
-    font-size: 0.93rem;
-  }
-  .course-body .ps { color: var(--text-secondary); font-size: 0.9rem; }
-
-  .footer {
-    text-align: center;
-    padding: 48px 24px 64px;
-    color: var(--text-secondary);
-    font-size: 0.8rem;
-    letter-spacing: 0.04em;
-  }
-
-  @media (max-width: 640px) {
-    .hero { padding: 48px 20px 32px; }
-    .hero h1 { font-size: 1.8rem; }
-    .course-card { padding: 0 16px; margin-bottom: 36px; }
-    .page-cover-inner { aspect-ratio: 16 / 8; }
-  }
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>课程评测 · 大三上</title>
+  <link rel="icon" href="../assets/images/avatar.jpg">
+  <link rel="stylesheet" href="../assets/style.css">
+  <style>
+    .course-tag {
+      display: inline-block;
+      font-size: 0.75rem;
+      background: var(--tag-bg);
+      color: var(--text-secondary);
+      padding: 2px 10px;
+      border-radius: 20px;
+      margin-bottom: 8px;
+    }
+    .course-meta {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      margin-bottom: 20px;
+    }
+    .highlight-box {
+      background: var(--tag-bg);
+      border-left: 3px solid var(--accent);
+      padding: 12px 16px;
+      margin: 1em 0;
+      border-radius: 0 8px 8px 0;
+      font-size: 0.93rem;
+    }
+    .course-section {
+      margin-top: 2em;
+      padding-top: 1em;
+      border-top: 1px solid var(--divider);
+    }
+    .ps {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+    }
+  </style>
 </head>
 <body>
+  <header class="top-bar">
+    <span class="site-name">SunXT's Homepage</span>
+  </header>
 
-<header class="hero">
-  <h1>大三上 · 课程评测</h1>
-  <p class="subtitle">
-    本人学业水平处于中下游且比较摆，对部分同学来说可能参考价值不大，但也算提供一些课程评测的其他视角吧
-  </p>
-</header>
+  <main class="main-container">
+    <a class="back-link" href="../index.html#blog">← 返回 Blog</a>
 
-<!-- 封面 -->
-<div class="page-cover">
-  <div class="page-cover-inner"></div>
-</div>
+    <article class="blog-detail">
+      <span class="course-tag">课程评测</span>
+      <h1 class="blog-detail-title">课程评测 · 大三上</h1>
 
+      <p class="blog-detail-body" style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 20px;">
+        背政治背不下去了，遂开个课程评测洞。本人学业水平处于中下游且比较摆，对部分同学来说可能参考价值不大，但也算提供一些课程评测的其他视角吧
+      </p>
 
-<!-- 游泳 -->
-<article class="course-card">
-  <span class="course-tag">体育课</span>
-  <h2 class="course-title">游泳</h2>
-  <div class="course-meta">zzj · 得分 94</div>
-  <div class="course-body">
-    <p>适合零基础同学的游泳课，一学期下来班里几乎所有人都能连续游200米了，我之前学过游泳，但是很怕冷+体力差，所以上的很痛苦，每周上课都很抵触。但是课堂氛围还是不错的，老师管的不是很严，可以在边上休息和聊天身体不舒服可以见习也不会扣分，倒数第三次课还带我们去深水区跳了个水，总体上上课的体验还算不错</p>
-    <p><strong>考核：</strong>主要还是看体测和考勤，期末考试是连续200米（泳道两个来回），满分4:10（我们全班没一个到这个满分线的），到不了的就按动作打分</p>
-    <div class="highlight-box"><strong>总体评价：</strong>作为体育课强烈推荐</div>
-  </div>
-</article>
+      <img class="blog-detail-cover" src="../assets/images/covers/cover4.jpg" alt="封面">
 
+      <div class="blog-detail-body">
+        <!-- 游泳 -->
+        <h2>游泳 <span class="course-tag" style="vertical-align: middle;">体育课</span></h2>
+        <p class="course-meta">zzj · 得分 94</p>
+        <p>适合零基础同学的游泳课，一学期下来班里几乎所有人都能连续游200米了，我之前学过游泳，但是很怕冷+体力差，所以上的很痛苦，每周上课都很抵触。但是课堂氛围还是不错的，老师管的不是很严，可以在边上休息和聊天身体不舒服可以见习也不会扣分，倒数第三次课还带我们去深水区跳了个水，总体上上课的体验还算不错</p>
+        <p><strong>考核：</strong>主要还是看体测和考勤，期末考试是连续200米（泳道两个来回），满分4:10（我们全班没一个到这个满分线的），到不了的就按动作打分</p>
+        <div class="highlight-box"><strong>总体评价：</strong>强烈推荐</div>
 
-<!-- 美国英语语音和听说词汇 -->
-<article class="course-card">
-  <span class="course-tag">英语课</span>
-  <h2 class="course-title">美国英语语音和听说词汇</h2>
-  <div class="course-meta">lb · 得分 93.5</div>
-  <div class="course-body">
-    <p>这个今晚才考试但我真的忍不住了，让我非常矛盾的一门课</p>
-    <p>首先是逆天的任务量，每周看慕课做语音小测，内容是区分一对很像的音，比如sin和sing，east和yeast之类的，而且还要刷三次满分，有时候特别难的小测真的是纯看运气，做的让人无语。</p>
-    <p>其次是极不合理的平时加减分制度，每节课会抽几个同学上台做上面说的小测的题，10道题全对/错一个/对一个加1分，全错加2分（是的全错比全对加分多），对3 4 5 6 7个扣1分。而由于是随机抽，每节课小测的难度差别又很大，简单的时候不做全错就是可惜，难的时候不扣分就是胜利，就导致很多同学的平时分就在这里很不合理地被拉开了差距。</p>
-    <p>除此之外还有每节课听读写/看读译小测，抽人回答慕课的问题等各种扣分政策，基本不会不会被扣多少分但是导致每次上课的压力都很大。</p>
-    <p>以上是避雷的点，接下来说一些让我感觉这门课还不错的点</p>
-    <p>首先是虽然有如上种种扣分政策，但是这门课不会有需要你深度付出才能拿到的分（比如论文pre），很适合论文和pre能力不强的同学，另外期末分数是赋分，所以不会有很极端的低分，应该都能80以上（目前是这么说的，出分了再看看）。以及lb老师的发音确实很厉害，上这个课还是能学到一些东西的</p>
-    <div class="highlight-box"><strong>总体评价：</strong>总的来说这门课很适合对重复低脑力劳动耐受力较强，且不喜欢论文pre的同学，对于其他同学则需要谨慎考虑。</div>
-    <p class="ps">PS：期末挺多没写出来意思和读错了的，给分确实不赖，如果不嫌麻烦依然推荐🤓</p>
-  </div>
-</article>
+        <!-- 美国英语语音和听说词汇 -->
+        <div class="course-section"></div>
+        <h2>美国英语语音和听说词汇 <span class="course-tag" style="vertical-align: middle;">英语课</span></h2>
+        <p class="course-meta">lb · 得分 93.5</p>
+        <p>这个当晚才考试但我真的忍不住了，让我非常矛盾的一门课</p>
+        <p>首先是逆天的任务量，每周看慕课做语音小测，内容是区分一对很像的音，比如sin和sing，east和yeast之类的，而且还要刷三次满分，有时候特别难的小测真的是纯看运气，做的让人无语。</p>
+        <p>其次是极不合理的平时加减分制度，每节课会抽几个同学上台做上面说的小测的题，10道题全对/错一个/对一个加1分，全错加2分（是的全错比全对加分多），对3 4 5 6 7个扣1分。而由于是随机抽，每节课小测的难度差别又很大，简单的时候不做全错就是可惜，难的时候不扣分就是胜利，就导致很多同学的平时分就在这里很不合理地被拉开了差距。</p>
+        <p>除此之外还有每节课听读写/看读译小测，抽人回答慕课的问题等各种扣分政策，基本不会不会被扣多少分但是导致每次上课的压力都很大。</p>
+        <p>以上是避雷的点，接下来说一些让我感觉这门课还不错的点</p>
+        <p>首先是虽然有如上种种扣分政策，但是这门课不会有需要你深度付出才能拿到的分（比如论文pre），很适合论文和pre能力不强的同学，另外期末分数是赋分，所以不会有很极端的低分，应该都能80以上（目前是这么说的，出分了再看看）。以及lb老师的发音确实很厉害，上这个课还是能学到一些东西的</p>
+        <div class="highlight-box"><strong>总体评价：</strong>总的来说这门课很适合对重复低脑力劳动耐受力较强，且不喜欢论文pre的同学，对于其他同学则需要谨慎考虑。</div>
+        <p class="ps">PS：期末挺多没写出来意思和读错了的，给分确实不赖，如果不嫌麻烦依然推荐🤓</p>
 
+        <!-- 史纲 -->
+        <div class="course-section"></div>
+        <h2>史纲 <span class="course-tag" style="vertical-align: middle;">政治课</span></h2>
+        <p class="course-meta">zy · 得分 85</p>
+        <p>史纲出分了，dz几乎裸考喜提政治课第二高分85</p>
+        <p>zy班的分数构成包括40论文，50考试和10平时分，论文可以写他提供的几个比较学术的专题，还可以写自己的家族史，但是dz跟家里老人关系一般就没写这个。</p>
+        <p>关于考试，dz中学一直是纯理，对历史了解很少，考前很害怕说不出话来，就找了个速通视频过了下史实，结果考试根本不需要史实，完全是照抄材料阅读理解🤣，但不凑巧我阅读理解也不会🤣</p>
+        <p>平时分10分说是有签到，但我好像一次都没签，还有做pre和发言加分，我也一次没做，最后这个分我也已经很满意了。</p>
+        <p>最后来说一下老师的讲课，zy老师是理工科出身，讲课风格上确实和其他政治课老师有很大的差别，多了一些活泼和趣味性，上他的课还是比其他政治课有意思一些的（不知道是不是史纲老师都这样）</p>
+        <div class="highlight-box"><strong>总体评价：</strong>总体上这门课没有必做的pre，给分也不差，老师讲课也有意思，关键是和zn相比还容易选上，因此我给出比较推荐的评价</div>
 
-<!-- 史纲 -->
-<article class="course-card">
-  <span class="course-tag">政治课</span>
-  <h2 class="course-title">史纲</h2>
-  <div class="course-meta">zy · 得分 85</div>
-  <div class="course-body">
-    <p>史纲出分了，dz几乎裸考喜提政治课第二高分85</p>
-    <p>zy班的分数构成包括40论文，50考试和10平时分，论文可以写他提供的几个比较学术的专题，还可以写自己的家族史，但是dz跟家里老人关系一般就没写这个。</p>
-    <p>关于考试，dz中学一直是纯理，对历史了解很少，考前很害怕说不出话来，就找了个速通视频过了下史实，结果考试根本不需要史实，完全是照抄材料阅读理解🤣，但不凑巧我阅读理解也不会🤣</p>
-    <p>平时分10分说是有签到，但我好像一次都没签，还有做pre和发言加分，我也一次没做，最后这个分我也已经很满意了。</p>
-    <p>最后来说一下老师的讲课，zy老师是理工科出身，讲课风格上确实和其他政治课老师有很大的差别，多了一些活泼和趣味性，上他的课还是比其他政治课有意思一些的（不知道是不是史纲老师都这样）</p>
-    <div class="highlight-box"><strong>总体评价：</strong>总体上这门课没有必做的pre，给分也不差，老师讲课也有意思，关键是和zn相比还容易选上，因此我给出比较推荐的评价</div>
-  </div>
-</article>
+        <!-- 经济学原理 -->
+        <div class="course-section"></div>
+        <h2>经济学原理（I） <span class="course-tag" style="vertical-align: middle;">通选课</span></h2>
+        <p class="course-meta">wzn · 得分 85.5</p>
+        <p>我本人对经济学可以说是毫无兴趣，选这门课单纯是因为缺这类的通选外加听说这门课评价很好，上下来的体验却不能说特别好。第一，想学好这门课会占用你较多的时间，一周3+1课时加上一次题量不小的作业，作为一门通选课来说任务量有点大，但是好在难度不高基本可以通过ai解决，且作业不看正确率只看完成度；第二，课程内容的安排在我一个没什么经济学直觉的非经院学生看来有些不合理，wzn老师的讲课很幽默风趣，但是经常会在一些非常基础的概念上花费大量的时间，而在一些复杂进阶的问题上又一笔带过，导致我经常上课走神，然后讲到关键问题的时候回过神来却发现已经讲完了，又恰好这个课没有回放，要想搞清楚就得花很多额外的时间，这一点不知道是不是我的个人问题，反正选课前没见有人说过。优点的话当然也是有的，但是说的人太多了我这里就不再赘述了。</p>
+        <div class="highlight-box"><strong>总体推荐度：</strong>一般吧，适合擅长听课以及对经济学有兴趣的同学选，如果只是想混二类学分的谨慎考虑</div>
 
+        <!-- 机器学习概论 -->
+        <div class="course-section"></div>
+        <h2>机器学习概论 <span class="course-tag" style="vertical-align: middle;">专业课 · PF</span></h2>
+        <p class="course-meta">dzh · PF</p>
+        <p>这门课我给pf了，完全没好好上就不过多评价了，只说几个我认为值得一提的点。</p>
+        <p>本课的平时作业和考试难度与PPT上的内容难度极不匹配，PPT像天书，考试出的题却很基本功，我这个没听过课，考前花俩小时过了遍ppt的半裸考选手靠着各种其他课的前世记忆都做出来了70分，并且剩下的30分是我没学到的内容，据说难度也是很宝宝巴士，要是认真复习了卷面90+应该不成问题，只要不像我一样算CNN参数和输入输入规模的时候第一步出错导致后面全错就行（</p>
+        <p>本课的分数组成为20书面作业30项目作业50考试，我认为项目作业安排的还算比较好，两个项目分别是cnn图分类加十折交叉验证和rnn生成对联，都有明确的框架和示例代码。让ai写加自己微调都能达到一个比较好的效果</p>
+        <div class="highlight-box"><strong>总体推荐度：</strong>比较推荐，pf的话几乎无任务量，拿脚都能p，认真学也能拿一个较高的分</div>
 
-<!-- 经济学原理 -->
-<article class="course-card">
-  <span class="course-tag">通识课</span>
-  <h2 class="course-title">经济学原理（I）</h2>
-  <div class="course-meta">wzn · 得分 85.5</div>
-  <div class="course-body">
-    <p>我本人对经济学可以说是毫无兴趣，选这门课单纯是因为缺这类的通选外加听说这门课评价很好，上下来的体验却不能说特别好。第一，想学好这门课会占用你较多的时间，一周3+1课时加上一次题量不小的作业，作为一门通选课来说任务量有点大，但是好在难度不高基本可以通过ai解决，且作业不看正确率只看完成度；第二，课程内容的安排在我一个没什么经济学直觉的非经院学生看来有些不合理，wzn老师的讲课很幽默风趣，但是经常会在一些非常基础的概念上花费大量的时间，而在一些复杂进阶的问题上又一笔带过，导致我经常上课走神，然后讲到关键问题的时候回过神来却发现已经讲完了，又恰好这个课没有回放，要想搞清楚就得花很多额外的时间，这一点不知道是不是我的个人问题，反正选课前没见有人说过。优点的话当然也是有的，但是说的人太多了我这里就不再赘述了。</p>
-    <div class="highlight-box"><strong>总体推荐度：</strong>一般吧，适合擅长听课以及对经济学有兴趣的同学选，如果只是想混二类学分的谨慎考虑</div>
-  </div>
-</article>
+        <!-- 公共高级日语 -->
+        <div class="course-section"></div>
+        <h2>公共高级日语（一） <span class="course-tag" style="vertical-align: middle;">旁听</span></h2>
+        <p class="course-meta">旁听</p>
+        <p>这学期最喜欢的课，可惜和经原讨论课撞了只能旁听。和初级中级一样每周6课时，但是学分数涨到了6学分，且从这学期开始变成了pf制，刷分党须知。</p>
+        <p>前面大半学期的课程内容是讲《日语完成教程 第三册》这本教材，难度大概是n3。后半学期由于有12月的日语jlpt考试，考虑到班里有不少同学报了n1n2，老师带着做了套n2的题，考完以后就恢复讲课了。</p>
+        <p>关于考试，由于我是旁听，所以期中和期末我都没考，这里就不讲了。但是既然已经改成pf了，考试难度什么的貌似也无所谓了，反正不可能挂人的。</p>
+        <p>然后是这个课我每周最期待的发表环节，这学期主题限制在日语词汇和语法知识上，没有那么多安利整活了，但是也变得专业硬核了很多，很多知识点我都是第一次知道，非常的面白い。我虽然是旁听但也去讲了，做的没选课同学那么认真但也在准备的过程中学到了很多。</p>
+        <div class="highlight-box"><strong>总结：</strong>对于有多余学分且有一定基础（n4就够）的同学可以无脑选。其他情况也可以无脑选择旁听</div>
+      </div>
+    </article>
 
+    <footer class="footer">
+      <p>&copy; 2026 SunXT</p>
+    </footer>
+  </main>
 
-<!-- 机器学习概论 -->
-<article class="course-card">
-  <span class="course-tag">专业课</span>
-  <h2 class="course-title">机器学习概论</h2>
-  <div class="course-meta">dzh · PF</div>
-  <div class="course-body">
-    <p>这门课我给pf了，完全没好好上就不过多评价了，只说几个我认为值得一提的点。</p>
-    <p>本课的平时作业和考试难度与PPT上的内容难度极不匹配，PPT像天书，考试出的题却很基本功，我这个没听过课，考前花俩小时过了遍ppt的半裸考选手靠着各种其他课的前世记忆都做出来了70分，并且剩下的30分是我没学到的内容，据说难度也是很宝宝巴士，要是认真复习了卷面90+应该不成问题，只要不像我一样算CNN参数和输入输入规模的时候第一步出错导致后面全错就行（</p>
-    <p>本课的分数组成为20书面作业30项目作业50考试，我认为项目作业安排的还算比较好，两个项目分别是cnn图分类加十折交叉验证和rnn生成对联，都有明确的框架和示例代码。让ai写加自己微调都能达到一个比较好的效果</p>
-    <div class="highlight-box"><strong>总体推荐度：</strong>比较推荐，pf的话几乎无任务量，拿脚都能p，认真学也能拿一个较高的分</div>
-  </div>
-</article>
-
-
-<!-- 公共高级日语 -->
-<article class="course-card">
-  <span class="course-tag">公选课</span>
-  <h2 class="course-title">公共高级日语（一）</h2>
-  <div class="course-meta">旁听</div>
-  <div class="course-body">
-    <p>这学期最喜欢的课，可惜和经原讨论课撞了只能旁听。和初级中级一样每周6课时，但是学分数涨到了6学分，且从这学期开始变成了pf制，刷分党须知。</p>
-    <p>前面大半学期的课程内容是讲《日语完成教程 第三册》这本教材，难度大概是n3。后半学期由于有12月的日语jlpt考试，考虑到班里有不少同学报了n1n2，老师带着做了套n2的题，考完以后就恢复讲课了。</p>
-    <p>关于考试，由于我是旁听，所以期中和期末我都没考，这里就不讲了。但是既然已经改成pf了，考试难度什么的貌似也无所谓了，反正不可能挂人的。</p>
-    <p>然后是这个课我每周最期待的发表环节，这学期主题限制在日语词汇和语法知识上，没有那么多安利整活了，但是也变得专业硬核了很多，很多知识点我都是第一次知道，非常的面白い。我虽然是旁听但也去讲了，做的没选课同学那么认真但也在准备的过程中学到了很多。</p>
-    <div class="highlight-box"><strong>总结：</strong>对于有多余学分且有一定基础（n4就够）的同学可以无脑选。其他情况也可以无脑选择旁听</div>
-  </div>
-</article>
-
-<!-- 其他课程汇总 -->
-<article class="course-card">
-  <span class="course-tag">其他课程</span>
-  <h2 class="course-title">毛概 / 信概统 / NLP / 计组</h2>
-  <div class="course-meta">nzh · wrs（中期退课）· sx · ljl</div>
-  <div class="course-body">
-    <p>（以下课程暂无详细评测）</p>
-    <ul style="padding-left: 1.5em; color: var(--text-secondary);">
-      <li><strong>毛概</strong> — nzh 老师</li>
-      <li><strong>信息学中的概率统计 / 信概统</strong> — wrs 老师（中期退课）</li>
-      <li><strong>自然语言处理 / NLP</strong> — sx 老师</li>
-      <li><strong>计算机组织与体系结构 / 计组</strong> — ljl 老师</li>
-    </ul>
-  </div>
-</article>
-
-<footer class="footer">
-  xk 鼠鼠的课程评测 · 大三上
-</footer>
-
+  <script src="../assets/script.js"></script>
 </body>
 </html>
