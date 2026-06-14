@@ -15,6 +15,7 @@
     initTabs();
     loadSections().then(function () {
       initMusicPlayer();
+      initMessages();
       initBlogFilter();
       initScrollReveal();
       initLightbox();
@@ -25,6 +26,7 @@
     var sections = [
       { id: 'tab-about', file: 'sections/about.html' },
       { id: 'tab-blog', file: 'sections/blog.html' },
+      { id: 'tab-messages', file: 'sections/messages.html' },
     ];
     return Promise.all(sections.map(function (s) {
       return fetch(s.file)
@@ -779,4 +781,198 @@
       lightbox.classList.remove('open');
     });
   }
+
+  /* ===================================================
+     7. Messages / Guestbook
+     =================================================== */
+  function initMessages() {
+    // Config — set these before deploying
+    var API_BASE = 'https://api.github.com';
+    var REPO_OWNER = 'SunXT-0719';
+    var REPO_NAME = 'SunXT-0719.github.io';
+    var ISSUE_NUMBER = 2;
+    // The Vercel-deployed OAuth function URL
+    var OAUTH_URL = 'https://githubio-eight.vercel.app/api/oauth';
+
+    var token = localStorage.getItem('gh_token');
+
+    var msgLogin = document.getElementById('msgLogin');
+    var msgLoginBtn = document.getElementById('msgLoginBtn');
+    var msgUser = document.getElementById('msgUser');
+    var msgAvatar = document.getElementById('msgAvatar');
+    var msgUsername = document.getElementById('msgUsername');
+    var msgLogoutBtn = document.getElementById('msgLogoutBtn');
+    var msgInputArea = document.getElementById('msgInputArea');
+    var msgTextarea = document.getElementById('msgTextarea');
+    var msgPreview = document.getElementById('msgPreview');
+    var msgSubmitBtn = document.getElementById('msgSubmitBtn');
+    var msgSubmitHint = document.getElementById('msgSubmitHint');
+    var msgList = document.getElementById('msgList');
+
+    if (!msgLogin) return; // messages tab not loaded
+
+    /* ---- Auth ---- */
+    function showLoggedIn(user) {
+      msgLogin.style.display = 'none';
+      msgUser.style.display = 'flex';
+      msgInputArea.style.display = '';
+      msgAvatar.src = user.avatar_url;
+      msgUsername.textContent = user.login;
+    }
+
+    function showLoggedOut() {
+      msgLogin.style.display = '';
+      msgUser.style.display = 'none';
+      msgInputArea.style.display = 'none';
+      localStorage.removeItem('gh_token');
+      token = null;
+    }
+
+    function fetchUser() {
+      if (!token) return;
+      fetch(API_BASE + '/user', {
+        headers: { 'Authorization': 'token ' + token }
+      })
+      .then(function (r) { return r.ok ? r.json() : Promise.reject(r); })
+      .then(function (user) { showLoggedIn(user); })
+      .catch(function () { showLoggedOut(); });
+    }
+
+    msgLoginBtn.addEventListener('click', function () {
+      if (OAUTH_URL.indexOf('YOUR-VERCEL') === 0) {
+        alert('请先将留言板的 OAUTH_URL 和 ISSUE_NUMBER 配置正确。\n详见 assets/script.js 中 initMessages 函数顶部的注释。');
+        return;
+      }
+      window.location.href = OAUTH_URL;
+    });
+
+    // Handle OAuth callback
+    var params = new URLSearchParams(window.location.search);
+    var code = params.get('code');
+    if (code) {
+      // Clean URL
+      history.replaceState(null, '', window.location.pathname);
+      fetch(OAUTH_URL + '?code=' + code)
+        .then(function (r) { return r.json(); })
+        .then(function (data) {
+          if (data.access_token) {
+            token = data.access_token;
+            localStorage.setItem('gh_token', token);
+            fetchUser();
+          }
+        });
+    }
+
+    msgLogoutBtn.addEventListener('click', function () {
+      showLoggedOut();
+    });
+
+    /* ---- Markdown preview ---- */
+    var previewMode = 'write';
+    document.querySelectorAll('.msg-tab-btn').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        document.querySelectorAll('.msg-tab-btn').forEach(function (b) { b.classList.remove('active'); });
+        btn.classList.add('active');
+        previewMode = btn.getAttribute('data-mode');
+        if (previewMode === 'preview') {
+          msgTextarea.style.display = 'none';
+          msgPreview.style.display = '';
+          if (typeof marked !== 'undefined') {
+            msgPreview.innerHTML = marked.parse(msgTextarea.value || '*暂无内容*');
+          }
+        } else {
+          msgTextarea.style.display = '';
+          msgPreview.style.display = 'none';
+        }
+      });
+    });
+
+    // Live preview update on input
+    msgTextarea.addEventListener('input', function () {
+      var val = msgTextarea.value.trim();
+      msgSubmitBtn.disabled = !val;
+      if (previewMode === 'preview' && typeof marked !== 'undefined') {
+        msgPreview.innerHTML = marked.parse(msgTextarea.value || '*暂无内容*');
+      }
+    });
+
+    /* ---- Submit message ---- */
+    msgSubmitBtn.addEventListener('click', function () {
+      if (!token || !msgTextarea.value.trim()) return;
+      msgSubmitBtn.disabled = true;
+      msgSubmitBtn.textContent = '发送中…';
+
+      fetch(API_BASE + '/repos/' + REPO_OWNER + '/' + REPO_NAME + '/issues/' + ISSUE_NUMBER + '/comments', {
+        method: 'POST',
+        headers: {
+          'Authorization': 'token ' + token,
+          'Content-Type': 'application/json',
+          'Accept': 'application/vnd.github.v3+json'
+        },
+        body: JSON.stringify({ body: msgTextarea.value })
+      })
+      .then(function (r) {
+        if (!r.ok) return r.json().then(function (e) { throw new Error(e.message); });
+        return r.json();
+      })
+      .then(function () {
+        msgTextarea.value = '';
+        msgSubmitBtn.textContent = '发送留言';
+        msgSubmitBtn.disabled = true;
+        msgSubmitHint.textContent = '✅ 发送成功！';
+        loadMessages();
+      })
+      .catch(function (err) {
+        msgSubmitBtn.disabled = false;
+        msgSubmitBtn.textContent = '发送留言';
+        msgSubmitHint.textContent = '❌ ' + (err.message || '发送失败');
+      });
+    });
+
+    /* ---- Load & render messages ---- */
+    function loadMessages() {
+      msgList.innerHTML = '<p class="msg-loading">加载留言中…</p>';
+      fetch(API_BASE + '/repos/' + REPO_OWNER + '/' + REPO_NAME + '/issues/' + ISSUE_NUMBER + '/comments?' +
+        'per_page=50&' + new Date().getTime())
+      .then(function (r) { return r.json(); })
+      .then(function (comments) {
+        if (!Array.isArray(comments)) {
+          msgList.innerHTML = '<p class="msg-empty">暂无留言，来做第一个留言的人吧 ✨</p>';
+          return;
+        }
+        if (comments.length === 0) {
+          msgList.innerHTML = '<p class="msg-empty">暂无留言，来做第一个留言的人吧 ✨</p>';
+          return;
+        }
+        var html = '';
+        comments.reverse().forEach(function (c) {
+          var body = c.body || '';
+          if (typeof marked !== 'undefined') {
+            body = marked.parse(body);
+          } else {
+            body = body.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+          }
+          html += '<div class="msg-item">' +
+            '<img class="msg-item-avatar" src="' + (c.user ? c.user.avatar_url : '') + '" alt="">' +
+            '<div class="msg-item-body">' +
+              '<div class="msg-item-header">' +
+                '<span class="msg-item-name">' + (c.user ? c.user.login : 'anonymous') + '</span>' +
+                '<span class="msg-item-time">' + new Date(c.created_at).toLocaleString('zh-CN') + '</span>' +
+              '</div>' +
+              '<div class="msg-item-content markdown-body">' + body + '</div>' +
+            '</div>' +
+          '</div>';
+        });
+        msgList.innerHTML = html;
+      })
+      .catch(function () {
+        msgList.innerHTML = '<p class="msg-empty">加载失败，请检查留言板配置 (ISSUE_NUMBER)</p>';
+      });
+    }
+
+    // Init
+    if (token) { fetchUser(); }
+    loadMessages();
+  }
+
 })();

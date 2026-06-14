@@ -20,6 +20,7 @@
     <nav class="tab-nav" role="tablist">
       <button class="tab-btn active" role="tab" id="tab-btn-about" data-tab="about" aria-selected="true" aria-controls="tab-about">个人简介</button>
       <button class="tab-btn" role="tab" id="tab-btn-blog" data-tab="blog" aria-selected="false" aria-controls="tab-blog">Blog</button>
+      <button class="tab-btn" role="tab" id="tab-btn-messages" data-tab="messages" aria-selected="false" aria-controls="tab-messages">留言</button>
     </nav>
 
     <!-- About Tab — Content loaded from sections/about.html -->
@@ -27,6 +28,9 @@
 
     <!-- Blog Tab — Content loaded from sections/blog.html -->
     <section class="tab-content" id="tab-blog" role="tabpanel" aria-labelledby="tab-btn-blog"></section>
+
+    <!-- Messages Tab — Content loaded from sections/messages.html -->
+    <section class="tab-content" id="tab-messages" role="tabpanel" aria-labelledby="tab-btn-messages"></section>
 
   </main>
 
@@ -187,5 +191,6 @@
   <script src="https://cdn.jsdelivr.net/npm/aplayer@1/dist/APlayer.min.js"></script>
   <script src="assets/script.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </body>
 </html>

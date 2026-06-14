@@ -1359,6 +1359,291 @@ body {
   }
 }
 
+/* === Messages / Guestbook === */
+.msg-login {
+  text-align: center;
+  padding: 24px 0 8px;
+}
+
+.msg-login-hint {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  margin-bottom: 14px;
+}
+
+.msg-login-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 22px;
+  border: 1px solid var(--card-border);
+  border-radius: 10px;
+  font-size: 0.9rem;
+  color: #fff;
+  background: #24292e;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.msg-login-btn:hover {
+  background: #1b1f23;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.msg-user {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--divider);
+}
+
+.msg-user-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+}
+
+.msg-user-name {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  flex: 1;
+}
+
+.msg-logout-btn {
+  padding: 4px 12px;
+  border: 1px solid var(--card-border);
+  border-radius: 8px;
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  background: transparent;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.msg-logout-btn:hover {
+  color: #e05555;
+  border-color: #e05555;
+}
+
+/* Input area */
+.msg-input-area {
+  margin-bottom: 16px;
+}
+
+.msg-input-tabs {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 8px;
+}
+
+.msg-tab-btn {
+  padding: 4px 14px;
+  border: 1px solid var(--card-border);
+  border-radius: 6px;
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  background: transparent;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.msg-tab-btn.active {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}
+
+.msg-textarea {
+  width: 100%;
+  min-height: 120px;
+  padding: 12px;
+  border: 1px solid var(--card-border);
+  border-radius: 10px;
+  font-size: 0.85rem;
+  font-family: "SF Mono", "Fira Code", "Consolas", monospace;
+  color: var(--text-primary);
+  background: var(--tag-bg);
+  resize: vertical;
+  line-height: 1.6;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.msg-textarea:focus {
+  border-color: var(--accent);
+}
+
+.msg-preview {
+  min-height: 100px;
+  padding: 12px;
+  border: 1px solid var(--card-border);
+  border-radius: 10px;
+  background: var(--tag-bg);
+  font-size: 0.85rem;
+  line-height: 1.7;
+  color: var(--text-primary);
+}
+
+.msg-submit-btn {
+  margin-top: 8px;
+  padding: 8px 20px;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #fff;
+  background: var(--accent);
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.msg-submit-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.msg-submit-btn:not(:disabled):hover {
+  opacity: 0.85;
+}
+
+.msg-submit-hint {
+  margin-left: 10px;
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+}
+
+/* Message list */
+.msg-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.msg-loading,
+.msg-empty {
+  text-align: center;
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+  padding: 20px 0;
+}
+
+.msg-item {
+  display: flex;
+  gap: 12px;
+  padding: 14px;
+  border: 1px solid var(--divider);
+  border-radius: 12px;
+  transition: border-color 0.2s;
+}
+
+.msg-item:hover {
+  border-color: var(--card-border);
+}
+
+.msg-item-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.msg-item-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.msg-item-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 6px;
+}
+
+.msg-item-name {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.msg-item-time {
+  font-size: 0.7rem;
+  color: var(--text-secondary);
+}
+
+.msg-item-content {
+  font-size: 0.85rem;
+  line-height: 1.7;
+  color: var(--text-primary);
+  word-break: break-word;
+}
+
+/* Markdown content styling (matches GitHub) */
+.markdown-body h1,
+.markdown-body h2,
+.markdown-body h3 {
+  margin-top: 1em;
+  margin-bottom: 0.5em;
+  font-weight: 600;
+}
+.markdown-body h1 { font-size: 1.2rem; }
+.markdown-body h2 { font-size: 1.05rem; }
+.markdown-body h3 { font-size: 0.92rem; }
+
+.markdown-body p + p { margin-top: 0.6em; }
+
+.markdown-body code {
+  background: var(--tag-bg);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.85em;
+  font-family: "SF Mono", "Fira Code", monospace;
+}
+
+.markdown-body pre {
+  background: var(--tag-bg);
+  padding: 12px 14px;
+  border-radius: 8px;
+  overflow-x: auto;
+  margin: 0.6em 0;
+}
+
+.markdown-body pre code {
+  background: none;
+  padding: 0;
+}
+
+.markdown-body blockquote {
+  border-left: 3px solid var(--accent);
+  padding-left: 14px;
+  color: var(--text-secondary);
+  margin: 0.6em 0;
+}
+
+.markdown-body ul,
+.markdown-body ol {
+  padding-left: 1.5em;
+  margin: 0.5em 0;
+}
+
+.markdown-body li + li { margin-top: 0.2em; }
+
+.markdown-body a {
+  color: var(--accent);
+}
+
+.markdown-body img {
+  max-width: 100%;
+  border-radius: 6px;
+}
+
 /* === Lightbox === */
 .lightbox {
   display: none;
