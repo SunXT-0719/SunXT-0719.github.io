@@ -14,6 +14,7 @@
     initTheme();
     initTabs();
     loadSections().then(function () {
+      initBlogFilter();
       initScrollReveal();
       initLightbox();
     });
@@ -22,7 +23,7 @@
   function loadSections() {
     var sections = [
       { id: 'tab-about', file: 'sections/about.html' },
-      { id: 'tab-blog', file: 'sections/blog.html' }
+      { id: 'tab-blog', file: 'sections/blog.html' },
     ];
     return Promise.all(sections.map(function (s) {
       return fetch(s.file)
@@ -191,7 +192,61 @@
   }
 
   /* ===================================================
-     3. Scroll Reveal (throttled with requestAnimationFrame)
+     3. Blog Filter & Search
+     =================================================== */
+  function initBlogFilter() {
+    var catBtns = document.querySelectorAll('.blog-cat-btn');
+    var searchInput = document.querySelector('.blog-search');
+    var items = document.querySelectorAll('.blog-item');
+    var emptyState = document.querySelector('.blog-empty');
+
+    if (!catBtns.length || !items.length) return;
+
+    var currentCat = '全部';
+    var currentQuery = '';
+
+    function applyFilters() {
+      var visibleCount = 0;
+      items.forEach(function (item) {
+        var cat = item.getAttribute('data-category') || '';
+        var keywords = (item.getAttribute('data-keywords') || '').toLowerCase();
+        var text = (item.textContent || '').toLowerCase();
+
+        var catMatch = currentCat === '全部' || cat === currentCat;
+        var searchMatch = !currentQuery || keywords.indexOf(currentQuery) !== -1 || text.indexOf(currentQuery) !== -1;
+
+        if (catMatch && searchMatch) {
+          item.style.display = '';
+          visibleCount++;
+        } else {
+          item.style.display = 'none';
+        }
+      });
+
+      if (emptyState) {
+        emptyState.style.display = visibleCount === 0 ? '' : 'none';
+      }
+    }
+
+    catBtns.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        catBtns.forEach(function (b) { b.classList.remove('active'); });
+        btn.classList.add('active');
+        currentCat = btn.getAttribute('data-cat') || '全部';
+        applyFilters();
+      });
+    });
+
+    if (searchInput) {
+      searchInput.addEventListener('input', function () {
+        currentQuery = searchInput.value.toLowerCase().trim();
+        applyFilters();
+      });
+    }
+  }
+
+  /* ===================================================
+     4. Scroll Reveal (throttled with requestAnimationFrame)
      =================================================== */
   function initScrollReveal() {
     var revealElements = document.querySelectorAll('.reveal');
@@ -247,7 +302,7 @@
   }
 
   /* ===================================================
-     4. Lightbox
+     5. Lightbox
      =================================================== */
   function initLightbox() {
     var lightbox = document.getElementById('lightbox');

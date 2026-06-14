@@ -264,7 +264,69 @@ body {
   margin: 1.2em 0;
 }
 
-/* === Project Cards === */
+/* === Project Grid (in About tab) === */
+.project-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.project-card {
+  cursor: pointer;
+  background: var(--card-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--card-border);
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
+.project-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--hover-shadow);
+}
+
+.project-cover {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  background: var(--tag-bg);
+}
+
+.project-cover[src=""],
+.project-cover:not([src]),
+.project-cover[data-hidden] {
+  display: none;
+}
+
+.project-body {
+  padding: 14px 16px;
+}
+
+.project-title {
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.project-desc {
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+@media (max-width: 480px) {
+  .project-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* === Project Cards (legacy) === */
 .project-list {
   display: flex;
   flex-direction: column;
@@ -298,6 +360,71 @@ body {
 
 .project-link:hover {
   opacity: 0.7;
+}
+
+/* === Blog Filter Bar === */
+.blog-filter-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.blog-categories {
+  display: flex;
+  gap: 6px;
+}
+
+.blog-cat-btn {
+  padding: 6px 16px;
+  border: 1px solid var(--card-border);
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  cursor: pointer;
+  color: var(--text-secondary);
+  background: var(--card-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+
+.blog-cat-btn:hover {
+  color: var(--text-primary);
+  border-color: var(--accent);
+}
+
+.blog-cat-btn.active {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}
+
+.blog-search {
+  padding: 6px 14px;
+  border: 1px solid var(--card-border);
+  border-radius: 20px;
+  font-size: 0.8rem;
+  background: var(--card-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  color: var(--text-primary);
+  outline: none;
+  width: 160px;
+  transition: border-color 0.2s, width 0.2s;
+  font-family: inherit;
+}
+
+.blog-search::placeholder {
+  color: var(--text-secondary);
+}
+
+.blog-search:focus {
+  border-color: var(--accent);
+  width: 200px;
 }
 
 /* === Blog List === */

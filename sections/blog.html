@@ -1,5 +1,58 @@
+<div class="blog-filter-bar">
+  <div class="blog-categories">
+    <button class="blog-cat-btn active" data-cat="全部">全部</button>
+    <button class="blog-cat-btn" data-cat="项目">项目</button>
+    <button class="blog-cat-btn" data-cat="学业">学业</button>
+    <button class="blog-cat-btn" data-cat="其他">其他</button>
+  </div>
+  <input class="blog-search" type="text" placeholder="搜索…" aria-label="搜索文章">
+</div>
+
 <div class="blog-list">
-  <a class="card blog-item reveal" href="blog/课程评测-大三上.html">
+  <a class="card blog-item reveal" href="blog/project-pku-bbw.html" data-category="项目" data-keywords="PKU BlackBoard Watcher 教学网 通知 自动化 server酱 消息推送 安卓">
+    <div class="blog-item-body">
+      <div class="blog-item-date">2026-06-14</div>
+      <div class="blog-item-title">PKU-BlackBoard-Watcher</div>
+      <div class="blog-item-excerpt">教学网通知自动化-基于server酱的消息推送。Forked from YangTY's project</div>
+    </div>
+  </a>
+  <a class="card blog-item reveal" href="blog/project-wechat-bot.html" data-category="项目" data-keywords="wechat bot 微信 机器人">
+    <div class="blog-item-body">
+      <div class="blog-item-date">2026-06-14</div>
+      <div class="blog-item-title">wechat-bot</div>
+      <div class="blog-item-excerpt">基于窗口识别和模拟键盘操作的微信群聊bot</div>
+    </div>
+  </a>
+  <a class="card blog-item reveal" href="blog/project-statusline.html" data-category="项目" data-keywords="simple claude code statusline 状态栏">
+    <div class="blog-item-body">
+      <div class="blog-item-date">2026-06-14</div>
+      <div class="blog-item-title">simple-claude-code-statusline</div>
+      <div class="blog-item-excerpt">一个简单的针对接入第三方api设计的claude code状态栏插件</div>
+    </div>
+  </a>
+  <a class="card blog-item reveal" href="blog/project-cs2.html" data-category="项目" data-keywords="cs2 PickemSim 竞猜 模拟">
+    <div class="blog-item-body">
+      <div class="blog-item-date">2026-06-14</div>
+      <div class="blog-item-title">cs2-PickemSim</div>
+      <div class="blog-item-excerpt">基于蒙特卡洛模拟的高自由度 CS2 Major 模拟器</div>
+    </div>
+  </a>
+  <a class="card blog-item reveal" href="blog/project-anime-renamer.html" data-category="项目" data-keywords="anime renamer 动漫 资源库 格式化 重命名 脚本 skill">
+    <div class="blog-item-body">
+      <div class="blog-item-date">2026-06-14</div>
+      <div class="blog-item-title">anime-renamer</div>
+      <div class="blog-item-excerpt">对动漫资源库的文件进行统一格式化重命名的脚本与配套skill</div>
+    </div>
+  </a>
+  <a class="card blog-item reveal" href="blog/project-bangumi.html" data-category="项目" data-keywords="bangumi explorer 评分 检索 数据库">
+    <img class="blog-item-image" src="assets/images/covers/cover6.png" alt="">
+    <div class="blog-item-body">
+      <div class="blog-item-date">2026-06-14</div>
+      <div class="blog-item-title">bangumi_explorer</div>
+      <div class="blog-item-excerpt">Bangumi评分条件检索与数据库构建，同时部署了网页版，但暂不考虑长期维护</div>
+    </div>
+  </a>
+  <a class="card blog-item reveal" href="blog/课程评测-大三上.html" data-category="学业" data-keywords="课程评测 大三上 游泳 英语语音 史纲 经济学原理 机器学习 高级日语">
     <img class="blog-item-image" src="assets/images/covers/cover4.jpg" alt="">
     <div class="blog-item-body">
       <div class="blog-item-date">2026-06-14</div>
@@ -7,7 +60,7 @@
       <div class="blog-item-excerpt">游泳、英语语音、史纲、经济学原理、机器学习、高级日语…</div>
     </div>
   </a>
-  <a class="card blog-item reveal" href="blog/课程评测-大二上.html">
+  <a class="card blog-item reveal" href="blog/课程评测-大二上.html" data-category="学业" data-keywords="课程评测 大二上 魅力化学 游戏史 初级日语 离散数学 ICS 数算">
     <img class="blog-item-image" src="assets/images/covers/cover1.jpg" alt="">
     <div class="blog-item-body">
       <div class="blog-item-date">2026-06-14</div>
@@ -15,7 +68,7 @@
       <div class="blog-item-excerpt">魅力化学、游戏史、初级日语、离散数学…</div>
     </div>
   </a>
-  <a class="card blog-item reveal" href="blog/post-2.html">
+  <a class="card blog-item reveal" href="blog/post-2.html" data-category="其他" data-keywords="自己紹介 自我介绍 教育经历 游戏 动画 日语 专业 SunXT">
     <img class="blog-item-image" src="assets/images/covers/cover2.jpg" alt="">
     <div class="blog-item-body">
       <div class="blog-item-date">2026-06-14</div>
@@ -23,4 +76,9 @@
       <div class="blog-item-excerpt">About Me</div>
     </div>
   </a>
+</div>
+
+<div class="blog-empty empty-state" style="display:none">
+  <div class="empty-state-icon">🔍</div>
+  <div class="empty-state-text">没有找到匹配的文章</div>
 </div>
