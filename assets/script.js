@@ -855,12 +855,21 @@
     // Handle OAuth callback — token is in URL query param after Vercel redirect
     var params = new URLSearchParams(window.location.search);
     var urlToken = params.get('gh_token');
+    console.log('[留言板] URL search:', window.location.search, 'token found:', !!urlToken);
     if (urlToken) {
       token = urlToken;
+      console.log('[留言板] Saving token:', token.substring(0, 12) + '...');
       localStorage.setItem('gh_token', token);
-      // Clean URL and reload to remove token from address bar
       history.replaceState(null, '', window.location.pathname);
       fetchUser();
+    } else {
+      // Check localStorage for existing token
+      var savedToken = localStorage.getItem('gh_token');
+      console.log('[留言板] No URL token, localStorage token:', !!savedToken);
+      if (savedToken) {
+        token = savedToken;
+        fetchUser();
+      }
     }
 
     msgLogoutBtn.addEventListener('click', function () {
