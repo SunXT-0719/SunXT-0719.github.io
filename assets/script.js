@@ -244,55 +244,83 @@
       if (!blogTab || !blogListSaved) return;
       blogTab.innerHTML = blogListSaved;
       blogListSaved = null;
-      bindBlogItemClicks();
-      initBlogFilter();
+      // Re-init filters on the restored list
+      var catBtns2 = blogTab.querySelectorAll('.blog-cat-btn');
+      var searchInput2 = blogTab.querySelector('.blog-search');
+      var items2 = blogTab.querySelectorAll('.blog-item');
+      var emptyState2 = blogTab.querySelector('.blog-empty');
+      if (catBtns2.length && items2.length) {
+        var currentCat2 = '全部', currentQuery2 = '';
+        function applyFilters2() {
+          var vc = 0;
+          items2.forEach(function (item) {
+            var cat = item.getAttribute('data-category') || '';
+            var kw = (item.getAttribute('data-keywords') || '').toLowerCase();
+            var txt = (item.textContent || '').toLowerCase();
+            var cm = currentCat2 === '全部' || cat === currentCat2;
+            var sm = !currentQuery2 || kw.indexOf(currentQuery2) !== -1 || txt.indexOf(currentQuery2) !== -1;
+            item.style.display = (cm && sm) ? '' : 'none';
+            if (cm && sm) vc++;
+          });
+          if (emptyState2) emptyState2.style.display = vc === 0 ? '' : 'none';
+        }
+        catBtns2.forEach(function (btn) {
+          btn.addEventListener('click', function () {
+            catBtns2.forEach(function (b) { b.classList.remove('active'); });
+            btn.classList.add('active');
+            currentCat2 = btn.getAttribute('data-cat') || '全部';
+            applyFilters2();
+          });
+        });
+        if (searchInput2) {
+          searchInput2.addEventListener('input', function () {
+            currentQuery2 = searchInput2.value.toLowerCase().trim();
+            applyFilters2();
+          });
+        }
+      }
       history.replaceState(null, '', '#blog');
     }
 
-    function bindBlogItemClicks() {
-      if (!blogTab) return;
-      var blogItems = blogTab.querySelectorAll('.blog-item');
-      blogItems.forEach(function (item) {
-        if (item.hasAttribute('data-spa-bound')) return;
-        item.setAttribute('data-spa-bound', '1');
-        item.addEventListener('click', function (e) {
-          e.preventDefault();
-          var href = item.getAttribute('href');
-          if (!href) return;
+    // Event delegation — single handler on blog tab, survives DOM rebuilds
+    if (blogTab) {
+      blogTab.addEventListener('click', function (e) {
+        var item = e.target.closest('.blog-item');
+        if (!item) return;
+        e.preventDefault();
+        var href = item.getAttribute('href');
+        if (!href) return;
 
-          if (!blogListSaved) blogListSaved = blogTab.innerHTML;
+        if (!blogListSaved) blogListSaved = blogTab.innerHTML;
 
-          blogTab.innerHTML = '<div class="blog-detail"><p style="text-align:center;color:var(--text-secondary);padding:40px">加载中…</p></div>';
+        blogTab.innerHTML = '<div class="blog-detail"><p style="text-align:center;color:var(--text-secondary);padding:40px">加载中…</p></div>';
 
-          fetch(href)
-            .then(function (r) { return r.text(); })
-            .then(function (html) {
-              var doc = new DOMParser().parseFromString(html, 'text/html');
-              var article = doc.querySelector('.blog-detail');
-              if (!article) { window.location.href = href; return; }
+        fetch(href)
+          .then(function (r) { return r.text(); })
+          .then(function (html) {
+            var doc = new DOMParser().parseFromString(html, 'text/html');
+            var article = doc.querySelector('.blog-detail');
+            if (!article) { window.location.href = href; return; }
 
-              var title = doc.querySelector('title');
-              if (title) document.title = title.textContent;
+            var title = doc.querySelector('title');
+            if (title) document.title = title.textContent;
 
-              blogTab.innerHTML = '<a class="back-link blog-spa-back" href="#">← 返回 Blog</a>' + article.outerHTML;
+            blogTab.innerHTML = '<a class="back-link blog-spa-back" href="#">← 返回 Blog</a>' + article.outerHTML;
 
-              history.pushState(null, '', '#' + href.replace(/^blog\//, '').replace('.html', ''));
+            history.pushState(null, '', '#' + href.replace(/^blog\//, '').replace('.html', ''));
 
-              var spaBack = blogTab.querySelector('.blog-spa-back');
-              if (spaBack) {
-                spaBack.addEventListener('click', function (e2) {
-                  e2.preventDefault();
-                  showBlogList();
-                  document.title = "SunXT's Homepage";
-                });
-              }
-            })
-            .catch(function () { window.location.href = href; });
-        });
+            var spaBack = blogTab.querySelector('.blog-spa-back');
+            if (spaBack) {
+              spaBack.addEventListener('click', function (e2) {
+                e2.preventDefault();
+                showBlogList();
+                document.title = "SunXT's Homepage";
+              });
+            }
+          })
+          .catch(function () { window.location.href = href; });
       });
     }
-
-    bindBlogItemClicks();
 
     window.addEventListener('popstate', function () {
       if (window.location.hash === '#blog' && blogListSaved) {
