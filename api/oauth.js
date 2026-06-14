@@ -43,8 +43,8 @@ export default async function handler(req, res) {
       return;
     }
 
-    // Redirect back to site with token in URL fragment (hash — never sent to server)
-    res.writeHead(302, { Location: siteUrl + '#gh_token=' + data.access_token });
+    // Redirect back to site — token in query param, JS will clean URL after reading
+    res.writeHead(302, { Location: siteUrl + '?gh_token=' + data.access_token });
     res.end();
   } catch (err) {
     res.writeHead(302, { Location: siteUrl + '?error=token_exchange_failed' });

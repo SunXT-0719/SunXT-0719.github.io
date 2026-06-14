@@ -833,9 +833,15 @@
       fetch(API_BASE + '/user', {
         headers: { 'Authorization': 'token ' + token }
       })
-      .then(function (r) { return r.ok ? r.json() : Promise.reject(r); })
+      .then(function (r) {
+        if (!r.ok) return r.json().then(function (e) { throw new Error('API error ' + r.status + ': ' + (e.message || '')); });
+        return r.json();
+      })
       .then(function (user) { showLoggedIn(user); })
-      .catch(function () { showLoggedOut(); });
+      .catch(function (err) {
+        console.error('GitHub user fetch failed:', err);
+        showLoggedOut();
+      });
     }
 
     msgLoginBtn.addEventListener('click', function () {
@@ -846,12 +852,13 @@
       window.location.href = OAUTH_URL;
     });
 
-    // Handle OAuth callback — token is in URL hash after Vercel redirect
-    var hash = window.location.hash;
-    if (hash && hash.indexOf('gh_token=') !== -1) {
-      token = hash.replace('#gh_token=', '');
+    // Handle OAuth callback — token is in URL query param after Vercel redirect
+    var params = new URLSearchParams(window.location.search);
+    var urlToken = params.get('gh_token');
+    if (urlToken) {
+      token = urlToken;
       localStorage.setItem('gh_token', token);
-      // Clean URL
+      // Clean URL and reload to remove token from address bar
       history.replaceState(null, '', window.location.pathname);
       fetchUser();
     }
