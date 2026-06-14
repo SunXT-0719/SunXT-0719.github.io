@@ -279,6 +279,14 @@ body {
 .text-xs   { font-size: 0.78rem; }
 .text-muted { color: var(--text-secondary); }
 
+/* Tag row */
+.about-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 0.8em 0 0.5em;
+}
+
 /* Inline tag/chip */
 .tag {
   display: inline-block;
