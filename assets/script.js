@@ -846,21 +846,14 @@
       window.location.href = OAUTH_URL;
     });
 
-    // Handle OAuth callback
-    var params = new URLSearchParams(window.location.search);
-    var code = params.get('code');
-    if (code) {
+    // Handle OAuth callback — token is in URL hash after Vercel redirect
+    var hash = window.location.hash;
+    if (hash && hash.indexOf('gh_token=') !== -1) {
+      token = hash.replace('#gh_token=', '');
+      localStorage.setItem('gh_token', token);
       // Clean URL
       history.replaceState(null, '', window.location.pathname);
-      fetch(OAUTH_URL + '?code=' + code)
-        .then(function (r) { return r.json(); })
-        .then(function (data) {
-          if (data.access_token) {
-            token = data.access_token;
-            localStorage.setItem('gh_token', token);
-            fetchUser();
-          }
-        });
+      fetchUser();
     }
 
     msgLogoutBtn.addEventListener('click', function () {
