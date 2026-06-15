@@ -16,7 +16,6 @@
     loadSections().then(function () {
       initMusicPlayer();
       initMessages();
-      initCounter();
       initBlogFilter();
       initScrollReveal();
       initLightbox();
@@ -855,42 +854,7 @@
   }
 
   /* ===================================================
-     6. Counter — visitor & page view tracker
-     =================================================== */
-  function initCounter() {
-    var counterEl = document.getElementById('footerCounter');
-    if (!counterEl) return;
-    var API = 'https://githubio-eight.vercel.app/api/counter';
-
-    var visitorKey = localStorage.getItem('_vid') || (function () {
-      var k = Math.random().toString(36).substring(2, 10) + Date.now().toString(36);
-      localStorage.setItem('_vid', k);
-      return k;
-    })();
-
-    fetch(API, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ visitor: 'v_' + visitorKey })
-    }).then(function (r) { return r.json(); })
-      .then(function (d) {
-        counterEl.innerHTML =
-          '<span class="footer-cv">👁 浏览 ' + d.pv + '</span>' +
-          '<span class="footer-cv">👤 访客 ' + d.uv + '</span>';
-      })
-      .catch(function () {
-        fetch(API).then(function (r) { return r.json(); })
-          .then(function (d) {
-            counterEl.innerHTML =
-              '<span class="footer-cv">👁 浏览 ' + d.pv + '</span>' +
-              '<span class="footer-cv">👤 访客 ' + d.uv + '</span>';
-          })
-          .catch(function () { counterEl.textContent = ''; });
-      });
-  }
-
-  /* ===================================================
-     7. Lightbox
+     6. Lightbox
      =================================================== */
   function initLightbox() {
     var lightbox = document.getElementById('lightbox');
