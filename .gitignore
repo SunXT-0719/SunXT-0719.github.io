@@ -1,1 +1,7 @@
 node_modules/
+.DS_Store
+.superpowers/
+.vercel/
+google*.html
+assets/.DS_Store
+assets/images/.DS_Store

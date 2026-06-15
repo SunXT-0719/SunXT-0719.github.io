@@ -1,5 +1,0 @@
-{"type":"server-started","port":57548,"host":"127.0.0.1","url_host":"localhost","url":"http://localhost:57548","screen_dir":"/Users/sunxt/github.io/.superpowers/brainstorm/53603-1781376955/content","state_dir":"/Users/sunxt/github.io/.superpowers/brainstorm/53603-1781376955/state"}
-{"type":"screen-added","file":"/Users/sunxt/github.io/.superpowers/brainstorm/53603-1781376955/content/layout.html"}
-{"type":"screen-added","file":"/Users/sunxt/github.io/.superpowers/brainstorm/53603-1781376955/content/visual-style.html"}
-{"source":"user-event","type":"click","text":"深色\n        \n        \n          \n            \n            \n          \n          浅色\n        \n      \n    \n    \n      自动切换 Auto\n      跟随系统明暗主题自动切换，深/浅两种模式各一套配色","choice":"auto","id":null,"timestamp":1781377542218}
-{"type":"server-stopped","reason":"idle timeout"}
