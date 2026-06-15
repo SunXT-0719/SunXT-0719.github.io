@@ -568,9 +568,20 @@ body {
 /* === Footer === */
 .footer {
   text-align: center;
-  padding: 20px;
+  padding: 12px 20px;
   font-size: 0.75rem;
   color: var(--text-secondary);
+  opacity: 0.7;
+}
+
+.footer-counter {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+}
+
+.footer-cv {
+  white-space: nowrap;
 }
 
 /* === Blog Detail Page === */
