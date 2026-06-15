@@ -1,4 +1,1 @@
-.superpowers/
-.DS_Store
-.HOW-TO-BLOG.md
-.vercel
+node_modules/
