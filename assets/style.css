@@ -62,21 +62,18 @@ body {
   transition: opacity 0.3s;
   pointer-events: none;
 }
-  justify-content: center;
-  padding: 100px 16px 40px;
-  transition: color 0.35s ease;
-}
 
 /* === Top Bar === */
 .top-bar {
   position: fixed;
   top: 0;
   left: 0;
-  right: 0;
+  width: 100%;
   z-index: 100;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 12px;
   padding: 14px 24px;
   background: var(--card-bg);
   backdrop-filter: var(--glass-blur);
@@ -85,6 +82,8 @@ body {
 }
 
 .site-name {
+  flex-shrink: 0;
+  white-space: nowrap;
   font-size: 0.95rem;
   font-weight: 600;
   color: var(--text-primary);
