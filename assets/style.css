@@ -74,8 +74,8 @@ body {
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  padding: 14px 24px;
-  background: var(--card-bg);
+  padding: 8px 24px;
+  background: rgba(255, 255, 255, 0.25);
   backdrop-filter: var(--glass-blur);
   -webkit-backdrop-filter: var(--glass-blur);
   border-bottom: 1px solid var(--card-border);
@@ -201,7 +201,7 @@ body {
 .hero {
   text-align: center;
   padding: 32px 28px 28px;
-  margin-top: 95vh;
+  margin-top: 110vh;
 }
 
 .avatar-link {
@@ -767,7 +767,7 @@ body {
 
   .hero {
     padding: 24px 20px;
-    margin-top: 60vh;
+    margin-top: 75vh;
   }
 
   .avatar {
@@ -786,16 +786,22 @@ body {
 
 /* === Side Panel === */
 .side-panel {
-  position: fixed;
-  top: 80px;
+  position: absolute;
+  top: calc(110vh + 200px);
   right: 24px;
-  bottom: 24px;
   z-index: 80;
   width: 340px;
   display: flex;
   flex-direction: column;
   gap: 16px;
   overflow-y: auto;
+  transition: none;
+}
+
+.side-panel.stuck {
+  position: fixed;
+  top: 60px;
+  bottom: 24px;
 }
 
 .side-widget {

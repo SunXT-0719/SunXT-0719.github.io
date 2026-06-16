@@ -14,6 +14,7 @@
     initTheme();
     initTabs();
     initBgGradient();
+    initStickyPanel();
     loadSections().then(function () {
       initMusicPlayer();
       initMessages();
@@ -31,6 +32,30 @@
     window.addEventListener('scroll', function () {
       layerB.style.opacity = Math.min(1, window.scrollY / vh);
     }, { passive: true });
+  }
+
+  /* ---- Sticky side panel: scrolls normally, stops at top:60px ---- */
+  function initStickyPanel() {
+    var panel = document.querySelector('.side-panel');
+    if (!panel) return;
+    var stickyTop = 60;
+    var panelInitialTop = (window.innerHeight * 1.1) + 200; // matches CSS calc(110vh + 200px)
+
+    function update() {
+      var scrollY = window.scrollY;
+      if (scrollY + stickyTop >= panelInitialTop) {
+        panel.classList.add('stuck');
+      } else {
+        panel.classList.remove('stuck');
+      }
+    }
+
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', function () {
+      panelInitialTop = (window.innerHeight * 1.1) + 200;
+      update();
+    }, { passive: true });
+    update();
   }
 
   function loadSections() {
