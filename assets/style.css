@@ -154,11 +154,11 @@ body {
 }
 
 .tab-btn.active {
-  color: #2b6cb0;
+  color: #1a1a1a;
 }
 
 .tab-btn:hover {
-  color: #2b6cb0;
+  color: #1a1a1a;
 }
 
 /* === Tab Content === */
