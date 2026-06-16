@@ -41,30 +41,22 @@ body {
   display: flex;
 }
 
-/* Layer 1: image A (bottom) */
-body::before {
-  content: '';
+/* Layer 1: image A (always visible, bottom layer) */
+#bg-layer-a {
   position: fixed;
   inset: 0;
   z-index: -2;
-  background-image: url('images/bgA.jpg');
-  background-size: cover;
-  background-position: center top;
-  background-attachment: fixed;
+  background: url('images/bgA.jpg') center top / cover fixed;
 }
 
-/* Layer 2: image B (top) — mask fades in over scroll */
-body::after {
-  content: '';
+/* Layer 2: image B (top layer, opacity controlled by JS scroll) */
+#bg-layer-b {
   position: fixed;
   inset: 0;
   z-index: -1;
-  background-image: var(--bg-image);
-  background-size: cover;
-  background-position: center;
-  background-attachment: fixed;
-  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, transparent 30%, black 100%);
-  mask-image: linear-gradient(to bottom, transparent 0%, transparent 30%, black 100%);
+  background: var(--bg-image) center / cover fixed;
+  opacity: 0;
+  transition: opacity 0.3s;
 }
   justify-content: center;
   padding: 100px 16px 40px;
