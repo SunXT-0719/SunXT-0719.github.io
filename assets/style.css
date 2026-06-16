@@ -177,6 +177,11 @@ body {
   display: block;
 }
 
+#tab-blog.active,
+#tab-messages.active {
+  padding-top: 120px;
+}
+
 /* === Glass Card === */
 .card {
   background: var(--card-bg);
