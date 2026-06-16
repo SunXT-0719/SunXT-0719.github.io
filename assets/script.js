@@ -62,7 +62,11 @@
 
     window.addEventListener('scroll', update, { passive: true });
     window.addEventListener('resize', update, { passive: true });
-    window.addEventListener('hashchange', update);
+    window.addEventListener('hashchange', function () {
+      update();
+      // Double-check after DOM settles
+      setTimeout(update, 50);
+    });
     update();
   }
 
@@ -170,6 +174,18 @@
         history.replaceState(null, '', '#' + tabId);
       }
       window.scrollTo({ top: 0, behavior: 'smooth' });
+      // Re-check sticky panel position after tab switch
+      setTimeout(function () {
+        var panel = document.querySelector('.side-panel');
+        if (panel) {
+          var hash2 = window.location.hash.replace('#', '');
+          if (!hash2 || hash2 === 'about') {
+            panel.classList.remove('stuck');
+          } else {
+            panel.classList.add('stuck');
+          }
+        }
+      }, 100);
     }
 
     tabButtons.forEach(function (btn) {
