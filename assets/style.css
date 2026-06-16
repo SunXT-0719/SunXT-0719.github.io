@@ -203,6 +203,7 @@ body {
 .hero {
   text-align: center;
   padding: 32px 28px 28px;
+  margin-top: 95vh;
 }
 
 .avatar-link {
@@ -768,6 +769,7 @@ body {
 
   .hero {
     padding: 24px 20px;
+    margin-top: 60vh;
   }
 
   .avatar {
