@@ -131,7 +131,6 @@ body {
 .tab-nav {
   display: flex;
   gap: 4px;
-  margin-bottom: 24px;
   padding: 4px;
   background: var(--card-bg);
   backdrop-filter: var(--glass-blur);
