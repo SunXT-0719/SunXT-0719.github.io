@@ -14,6 +14,7 @@
     initTheme();
     initTabs();
     initBgGradient();
+    initStickyPanel();
     loadSections().then(function () {
       initMusicPlayer();
       initMessages();
@@ -34,6 +35,48 @@
   }
 
   /* ---- Sticky side panel: scrolls normally, stops at top:60px ---- */
+  /* ---- Sticky side panel: scrolls normally on Home, sticks early on Blog/Messages ---- */
+  function initStickyPanel() {
+    var panel = document.querySelector('.side-panel');
+    if (!panel) return;
+    var stickyTop = 90;
+
+    function getInitialTop() {
+      // On Home tab: panel starts below hero (110vh + ~200px)
+      // On Blog/Messages: panel starts near top (short empty space)
+      var hash = window.location.hash.replace('#', '');
+      if (!hash || hash === 'about') {
+        return (window.innerHeight * 1.1) + 200;
+      }
+      return stickyTop + 10; // already at sticky threshold
+    }
+
+    var panelInitialTop = getInitialTop();
+
+    function update() {
+      var scrollY = window.scrollY;
+      if (scrollY + stickyTop >= panelInitialTop) {
+        panel.classList.add('stuck');
+      } else {
+        panel.classList.remove('stuck');
+      }
+    }
+
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', function () {
+      panelInitialTop = getInitialTop();
+      update();
+    }, { passive: true });
+
+    // Recalc on hash change (tab switch)
+    window.addEventListener('hashchange', function () {
+      panelInitialTop = getInitialTop();
+      update();
+    });
+
+    update();
+  }
+
   function loadSections() {
     var sections = [
       { id: 'tab-about', file: 'sections/about.html' },

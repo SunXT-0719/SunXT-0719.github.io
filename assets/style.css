@@ -792,16 +792,21 @@ body {
 
 /* === Side Panel === */
 .side-panel {
-  position: fixed;
-  top: 90px;
+  position: absolute;
+  top: calc(110vh + 200px);
   right: 24px;
-  bottom: 24px;
   z-index: 80;
   width: 340px;
   display: flex;
   flex-direction: column;
   gap: 16px;
   overflow-y: auto;
+}
+
+.side-panel.stuck {
+  position: fixed;
+  top: 90px;
+  bottom: 24px;
 }
 
 .side-widget {
