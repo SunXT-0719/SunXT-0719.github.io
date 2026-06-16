@@ -140,7 +140,7 @@ body {
   font-size: 0.85rem;
   font-weight: 500;
   cursor: pointer;
-  color: var(--text-secondary);
+  color: #aaa;
   font-family: inherit;
   transition: color 0.2s;
 }
