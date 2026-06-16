@@ -38,7 +38,7 @@
   function initStickyPanel() {
     var panel = document.querySelector('.side-panel');
     if (!panel) return;
-    var stickyTop = 60;
+    var stickyTop = 90;
     var panelInitialTop = (window.innerHeight * 1.1) + 200; // matches CSS calc(110vh + 200px)
 
     function update() {
