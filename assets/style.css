@@ -35,13 +35,26 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
                "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
   color: var(--text-primary);
-  background-image: var(--bg-image);
+  background-image: url('images/bgA.jpg');
   background-size: cover;
-  background-position: center;
+  background-position: center top;
   background-attachment: fixed;
   min-height: 100vh;
   overscroll-behavior: none;
   display: flex;
+  position: relative;
+}
+
+/* Gradient overlay: fades from transparent (top) to bg.png (bottom) over ~1 screen */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background: var(--bg-image) center / cover fixed;
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, transparent 30%, black 100%);
+  mask-image: linear-gradient(to bottom, transparent 0%, transparent 30%, black 100%);
+}
   justify-content: center;
   padding: 100px 16px 40px;
   transition: color 0.35s ease;
