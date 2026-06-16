@@ -35,23 +35,34 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
                "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
   color: var(--text-primary);
+  background: none;
+  min-height: 100vh;
+  overscroll-behavior: none;
+  display: flex;
+}
+
+/* Layer 1: image A (bottom) */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -2;
   background-image: url('images/bgA.jpg');
   background-size: cover;
   background-position: center top;
   background-attachment: fixed;
-  min-height: 100vh;
-  overscroll-behavior: none;
-  display: flex;
-  position: relative;
 }
 
-/* Gradient overlay: fades from transparent (top) to bg.png (bottom) over ~1 screen */
+/* Layer 2: image B (top) — mask fades in over scroll */
 body::after {
   content: '';
   position: fixed;
   inset: 0;
   z-index: -1;
-  background: var(--bg-image) center / cover fixed;
+  background-image: var(--bg-image);
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
   -webkit-mask-image: linear-gradient(to bottom, transparent 0%, transparent 30%, black 100%);
   mask-image: linear-gradient(to bottom, transparent 0%, transparent 30%, black 100%);
 }
