@@ -27,10 +27,13 @@
   /* ---- Gradient background: bgA → bgB over 1 screen scroll ---- */
   function initBgGradient() {
     var layerB = document.getElementById('bg-layer-b');
+    var heroTitle = document.querySelector('.hero-title-wrap');
     if (!layerB) return;
     var vh = window.innerHeight;
     window.addEventListener('scroll', function () {
-      layerB.style.opacity = Math.min(1, window.scrollY / vh);
+      var pct = Math.min(1, window.scrollY / vh);
+      layerB.style.opacity = pct;
+      if (heroTitle) heroTitle.style.opacity = 1 - pct;
     }, { passive: true });
   }
 

@@ -48,7 +48,7 @@ body {
   position: fixed;
   inset: 0;
   z-index: -2;
-  background: url('images/bgA.jpeg') center top / cover fixed;
+  background: url('images/bgA.png') center top / cover fixed;
   pointer-events: none;
 }
 
@@ -201,6 +201,29 @@ body {
   letter-spacing: 0.06em;
   color: var(--text-secondary);
   margin-bottom: 14px;
+}
+
+/* === Hero Title Overlay === */
+.hero-title-wrap {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 1;
+  transition: opacity 0.5s ease;
+}
+
+.hero-title {
+  font-size: 3.5rem;
+  font-weight: 300;
+  letter-spacing: 0.08em;
+  color: rgba(255, 255, 255, 0.9);
+  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  font-family: "Noto Serif SC", "Georgia", serif;
 }
 
 /* === Hero Section === */
