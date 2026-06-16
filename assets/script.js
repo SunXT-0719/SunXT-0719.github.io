@@ -161,6 +161,7 @@
       if (window.location.hash !== '#' + tabId) {
         history.replaceState(null, '', '#' + tabId);
       }
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
     tabButtons.forEach(function (btn) {
