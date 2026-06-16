@@ -48,7 +48,7 @@ body {
   position: fixed;
   inset: 0;
   z-index: -2;
-  background: url('images/bgA.jpg') center top / cover fixed;
+  background: url('images/bgA.jpeg') center top / cover fixed;
   pointer-events: none;
 }
 
@@ -792,22 +792,16 @@ body {
 
 /* === Side Panel === */
 .side-panel {
-  position: absolute;
-  top: calc(110vh + 200px);
+  position: fixed;
+  top: 90px;
   right: 24px;
+  bottom: 24px;
   z-index: 80;
   width: 340px;
   display: flex;
   flex-direction: column;
   gap: 16px;
   overflow-y: auto;
-  transition: none;
-}
-
-.side-panel.stuck {
-  position: fixed;
-  top: 90px;
-  bottom: 24px;
 }
 
 .side-widget {
