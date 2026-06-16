@@ -52,7 +52,7 @@
         return;
       }
       // Home: scroll-then-stick
-      var initialTop = (window.innerHeight * 1.1) + 40;
+      var initialTop = (window.innerHeight * 1.1) + 30;
       if (window.scrollY + 90 >= initialTop) {
         panel.classList.add('stuck');
       } else {

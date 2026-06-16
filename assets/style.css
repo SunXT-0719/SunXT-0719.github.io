@@ -793,7 +793,7 @@ body {
 /* === Side Panel === */
 .side-panel {
   position: absolute;
-  top: calc(110vh + 40px);
+  top: calc(110vh + 30px);
   right: 24px;
   z-index: 80;
   width: 340px;
