@@ -154,11 +154,11 @@ body {
 }
 
 .tab-btn.active {
-  color: var(--accent);
+  color: #2b6cb0;
 }
 
 .tab-btn:hover {
-  color: var(--accent);
+  color: #2b6cb0;
 }
 
 /* === Tab Content === */
