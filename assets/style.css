@@ -883,6 +883,26 @@ body {
   flex: 1;
 }
 
+.player-header-btn {
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s, background 0.2s;
+  flex-shrink: 0;
+  margin-left: auto;
+}
+
+.player-header-btn:hover {
+  color: var(--accent);
+  background: var(--tag-bg);
+}
+
 .player-playlist-btn {
   background: none;
   border: none;
@@ -1236,8 +1256,8 @@ body {
 
 .pl-inline-dropdown {
   position: absolute;
-  bottom: calc(100% + 6px);
-  left: 0;
+  top: calc(100% + 6px);
+  right: 0;
   min-width: 140px;
   background: var(--card-bg);
   backdrop-filter: var(--glass-blur);
@@ -1363,6 +1383,12 @@ body {
   }
 
   .player-header {
+    margin-bottom: 0;
+    gap: 4px;
+  }
+
+  .player-header-bar,
+  .player-header-text {
     display: none;
   }
 

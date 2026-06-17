@@ -452,6 +452,13 @@
      5. Music Player — Custom UI + APlayer API
      =================================================== */
   function initMusicPlayer() {
+    // Suppress harmless AbortError when play() is interrupted by a new load
+    window.addEventListener('unhandledrejection', function (e) {
+      if (e.reason && e.reason.name === 'AbortError') {
+        e.preventDefault();
+      }
+    });
+
     var options = document.querySelectorAll('.pl-option');
     var dropdownList = document.getElementById('plDropdownList');
     var statusEl = document.getElementById('playerStatus');
@@ -466,7 +473,9 @@
     var isDraggingProgress = false;
     var isDraggingVolume = false;
 
-    // Track mode ourselves — APlayer.mode is a method, not a plain property
+    // APlayer.options.order controls playback: 'list' | 'random'. No native 'single'.
+    // We track mode ourselves and use audio.loop for single-song repeat.
+    var currentMode = 'list';
 
     /* ---- DOM refs ---- */
     var ui = document.getElementById('playerCustomUI');
@@ -487,6 +496,12 @@
     var listPanel = document.getElementById('playerListPanel');
     var listOl = document.getElementById('playerListOl');
     var plToggleBtn = document.getElementById('plToggleBtn');
+
+    // Mode button refs
+    var btnMode = document.getElementById('btnMode');
+    var modeSvgList   = btnMode ? btnMode.querySelector('.pl-mode-list') : null;
+    var modeSvgSingle = btnMode ? btnMode.querySelector('.pl-mode-single') : null;
+    var modeSvgRandom = btnMode ? btnMode.querySelector('.pl-mode-random') : null;
 
     // SVG icon pieces
     var svgPlaying = statusIcon ? statusIcon.querySelector('.pl-icon-playing') : null;
@@ -616,6 +631,28 @@
         btnPlay.title = '播放';
       }
 
+      // Mode button icon
+      if (btnMode) {
+        var mode = currentMode;
+        hideSvg(modeSvgList);
+        hideSvg(modeSvgSingle);
+        hideSvg(modeSvgRandom);
+        var modeLabels = { 'list': '列表循环', 'single': '单曲循环', 'random': '随机播放' };
+        if (mode === 'single') {
+          showSvg(modeSvgSingle);
+        } else if (mode === 'random') {
+          showSvg(modeSvgRandom);
+        } else {
+          showSvg(modeSvgList);
+        }
+        btnMode.title = '播放模式: ' + (modeLabels[mode] || mode);
+        if (mode === 'list') {
+          btnMode.classList.remove('mode-active');
+        } else {
+          btnMode.classList.add('mode-active');
+        }
+      }
+
       // Keep playlist highlight in sync
       updatePlaylistHighlight();
     }
@@ -705,6 +742,18 @@
       activePlayer.audio.muted = !activePlayer.audio.muted;
       syncUI();
     });
+
+    /* ---- Mode button: cycle list → single → random ---- */
+    if (btnMode) {
+      btnMode.addEventListener('click', function () {
+        if (!activePlayer) return;
+        var modes = ['list', 'single', 'random'];
+        var idx = modes.indexOf(currentMode);
+        currentMode = modes[(idx + 1) % 3];
+        applyMode(currentMode);
+        syncUI();
+      });
+    }
 
     /* ---- Control buttons ---- */
     btnPlay.addEventListener('click', function () {
@@ -844,12 +893,29 @@
       activePlayer = getPlayer(key);
       if (activePlayer) {
         bindPlayerEvents();
+        // Reapply current mode to the new APlayer instance
+        applyMode(currentMode);
         syncUI();
         if (ui) ui.style.display = '';
         hideStatus();
         if (listPanel.style.display !== 'none') {
           renderPlaylist();
         }
+      }
+    }
+
+    /* ---- Apply playback mode to active APlayer ---- */
+    function applyMode(mode) {
+      if (!activePlayer) return;
+      if (mode === 'random') {
+        activePlayer.options.order = 'random';
+        activePlayer.audio.loop = false;
+      } else if (mode === 'single') {
+        activePlayer.options.order = 'list';
+        activePlayer.audio.loop = true;
+      } else {
+        activePlayer.options.order = 'list';
+        activePlayer.audio.loop = false;
       }
     }
 
