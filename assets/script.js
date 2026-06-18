@@ -1,6 +1,10 @@
 (function () {
   'use strict';
 
+  // Saved blog list HTML — when viewing a post in SPA mode, the list
+  // is saved here so we can restore it when switching back to Blog tab.
+  var blogListSaved = null;
+
   /* ===================================================
      Initialization
      =================================================== */
@@ -22,6 +26,52 @@
       initScrollReveal();
       initLightbox();
     });
+  }
+
+  /* ---- Restore blog list when a post was open in SPA mode ---- */
+  function restoreBlogList() {
+    if (!blogListSaved) return;
+    var blogTab = document.getElementById('tab-blog');
+    if (!blogTab) return;
+    blogTab.innerHTML = blogListSaved;
+    blogListSaved = null;
+
+    // Re-init filters on the restored list
+    var catBtns = blogTab.querySelectorAll('.blog-cat-btn');
+    var searchInput = blogTab.querySelector('.blog-search');
+    var items = blogTab.querySelectorAll('.blog-item');
+    var emptyState = blogTab.querySelector('.blog-empty');
+    if (catBtns.length && items.length) {
+      var currentCat = '全部', currentQuery = '';
+      function applyFilters() {
+        var vc = 0;
+        items.forEach(function (item) {
+          var cat = item.getAttribute('data-category') || '';
+          var kw = (item.getAttribute('data-keywords') || '').toLowerCase();
+          var txt = (item.textContent || '').toLowerCase();
+          var cm = currentCat === '全部' || cat === currentCat;
+          var sm = !currentQuery || kw.indexOf(currentQuery) !== -1 || txt.indexOf(currentQuery) !== -1;
+          item.style.display = (cm && sm) ? '' : 'none';
+          if (cm && sm) vc++;
+        });
+        if (emptyState) emptyState.style.display = vc === 0 ? '' : 'none';
+      }
+      catBtns.forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          catBtns.forEach(function (b) { b.classList.remove('active'); });
+          btn.classList.add('active');
+          currentCat = btn.getAttribute('data-cat') || '全部';
+          applyFilters();
+        });
+      });
+      if (searchInput) {
+        searchInput.addEventListener('input', function () {
+          currentQuery = searchInput.value.toLowerCase().trim();
+          applyFilters();
+        });
+      }
+    }
+    history.replaceState(null, '', '#blog');
   }
 
   /* ---- Gradient background: bgA → bgB over 1 screen scroll ---- */
@@ -179,6 +229,9 @@
         history.replaceState(null, '', '#' + tabId);
       }
       window.scrollTo({ top: 0, behavior: 'smooth' });
+
+      // Always show blog list (not a previously opened post)
+      if (tabId === 'blog') restoreBlogList();
       // Re-check sticky panel position after tab switch
       setTimeout(function () {
         var panel = document.querySelector('.side-panel');
@@ -304,49 +357,6 @@
 
     /* ---- Dynamic blog loading: open posts in-page so music keeps playing ---- */
     var blogTab = document.getElementById('tab-blog');
-    var blogListSaved = null;
-
-    function showBlogList() {
-      if (!blogTab || !blogListSaved) return;
-      blogTab.innerHTML = blogListSaved;
-      blogListSaved = null;
-      // Re-init filters on the restored list
-      var catBtns2 = blogTab.querySelectorAll('.blog-cat-btn');
-      var searchInput2 = blogTab.querySelector('.blog-search');
-      var items2 = blogTab.querySelectorAll('.blog-item');
-      var emptyState2 = blogTab.querySelector('.blog-empty');
-      if (catBtns2.length && items2.length) {
-        var currentCat2 = '全部', currentQuery2 = '';
-        function applyFilters2() {
-          var vc = 0;
-          items2.forEach(function (item) {
-            var cat = item.getAttribute('data-category') || '';
-            var kw = (item.getAttribute('data-keywords') || '').toLowerCase();
-            var txt = (item.textContent || '').toLowerCase();
-            var cm = currentCat2 === '全部' || cat === currentCat2;
-            var sm = !currentQuery2 || kw.indexOf(currentQuery2) !== -1 || txt.indexOf(currentQuery2) !== -1;
-            item.style.display = (cm && sm) ? '' : 'none';
-            if (cm && sm) vc++;
-          });
-          if (emptyState2) emptyState2.style.display = vc === 0 ? '' : 'none';
-        }
-        catBtns2.forEach(function (btn) {
-          btn.addEventListener('click', function () {
-            catBtns2.forEach(function (b) { b.classList.remove('active'); });
-            btn.classList.add('active');
-            currentCat2 = btn.getAttribute('data-cat') || '全部';
-            applyFilters2();
-          });
-        });
-        if (searchInput2) {
-          searchInput2.addEventListener('input', function () {
-            currentQuery2 = searchInput2.value.toLowerCase().trim();
-            applyFilters2();
-          });
-        }
-      }
-      history.replaceState(null, '', '#blog');
-    }
 
     // Event delegation — single handler on blog tab, survives DOM rebuilds
     if (blogTab) {
@@ -379,7 +389,7 @@
             if (spaBack) {
               spaBack.addEventListener('click', function (e2) {
                 e2.preventDefault();
-                showBlogList();
+                restoreBlogList();
                 document.title = "SunXT's Homepage";
               });
             }
@@ -390,7 +400,7 @@
 
     window.addEventListener('popstate', function () {
       if (window.location.hash === '#blog' && blogListSaved) {
-        showBlogList();
+        restoreBlogList();
         document.title = "SunXT's Homepage";
       }
     });

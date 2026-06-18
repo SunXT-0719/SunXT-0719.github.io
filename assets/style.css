@@ -651,9 +651,16 @@ body {
   gap: 4px;
   color: var(--text-secondary);
   text-decoration: none;
-  font-size: 0.85rem;
+  font-size: 0.82rem;
+  font-weight: 500;
   margin-bottom: 20px;
-  transition: color 0.2s;
+  padding: 6px 14px;
+  border: 1px solid var(--card-border);
+  border-radius: 8px;
+  background: var(--card-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  transition: color 0.2s, border-color 0.2s, background 0.2s;
 }
 
 .back-link:hover {
