@@ -740,6 +740,12 @@ body {
   padding: 0;
 }
 
+.blog-detail-body hr {
+  border: none;
+  border-top: 1px solid var(--divider);
+  margin: 1.6em 0;
+}
+
 .blog-detail-body blockquote {
   border-left: 3px solid var(--accent);
   padding-left: 16px;
