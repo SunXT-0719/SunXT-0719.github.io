@@ -1960,6 +1960,26 @@ textarea {
   color: var(--text-secondary);
 }
 
+.msg-reply-btn {
+  margin-left: auto;
+  padding: 2px 10px;
+  border: 1px solid var(--divider);
+  border-radius: 6px;
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: 0.7rem;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+
+.msg-reply-btn:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+  background: var(--tag-bg);
+}
+
 .msg-item-content {
   font-size: 0.85rem;
   line-height: 1.7;
@@ -2034,7 +2054,7 @@ textarea {
 /* === Friend Links === */
 .links-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 14px;
 }
 
@@ -2132,12 +2152,6 @@ textarea {
   background: none;
   padding: 0;
   font-size: inherit;
-}
-
-@media (max-width: 720px) {
-  .links-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
 }
 
 @media (max-width: 480px) {

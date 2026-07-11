@@ -42,11 +42,33 @@
     blogListSaved = null;
 
     // Re-init filters on the restored list
-    var catBtns = blogTab.querySelectorAll('.blog-cat-btn');
     var searchInput = blogTab.querySelector('.blog-search');
     var items = blogTab.querySelectorAll('.blog-item');
     var emptyState = blogTab.querySelector('.blog-empty');
-    if (catBtns.length && items.length) {
+    var catContainer = blogTab.querySelector('#blogCategories');
+    if (catContainer && items.length) {
+      // Regenerate category buttons with counts
+      var catCounts = {};
+      var totalCount = items.length;
+      items.forEach(function (item) {
+        var cat = item.getAttribute('data-category') || '未分类';
+        catCounts[cat] = (catCounts[cat] || 0) + 1;
+      });
+      catContainer.innerHTML = '';
+      var allBtn = document.createElement('button');
+      allBtn.className = 'blog-cat-btn active';
+      allBtn.setAttribute('data-cat', '全部');
+      allBtn.textContent = '全部(' + totalCount + ')';
+      catContainer.appendChild(allBtn);
+      Object.keys(catCounts).sort().forEach(function (cat) {
+        var btn = document.createElement('button');
+        btn.className = 'blog-cat-btn';
+        btn.setAttribute('data-cat', cat);
+        btn.textContent = cat + '(' + catCounts[cat] + ')';
+        catContainer.appendChild(btn);
+      });
+
+      var catBtns = catContainer.querySelectorAll('.blog-cat-btn');
       var currentCat = '全部', currentQuery = '';
       function applyFilters() {
         var vc = 0;
@@ -312,13 +334,38 @@
      3. Blog Filter & Search
      =================================================== */
   function initBlogFilter() {
-    var catBtns = document.querySelectorAll('.blog-cat-btn');
     var searchInput = document.querySelector('.blog-search');
     var items = document.querySelectorAll('.blog-item');
     var emptyState = document.querySelector('.blog-empty');
+    var catContainer = document.getElementById('blogCategories');
 
-    if (!catBtns.length || !items.length) return;
+    if (!catContainer || !items.length) return;
 
+    // Count posts per category
+    var catCounts = {};
+    var totalCount = items.length;
+    items.forEach(function (item) {
+      var cat = item.getAttribute('data-category') || '未分类';
+      catCounts[cat] = (catCounts[cat] || 0) + 1;
+    });
+
+    // Generate category buttons dynamically
+    catContainer.innerHTML = '';
+    var allBtn = document.createElement('button');
+    allBtn.className = 'blog-cat-btn active';
+    allBtn.setAttribute('data-cat', '全部');
+    allBtn.textContent = '全部(' + totalCount + ')';
+    catContainer.appendChild(allBtn);
+
+    Object.keys(catCounts).sort().forEach(function (cat) {
+      var btn = document.createElement('button');
+      btn.className = 'blog-cat-btn';
+      btn.setAttribute('data-cat', cat);
+      btn.textContent = cat + '(' + catCounts[cat] + ')';
+      catContainer.appendChild(btn);
+    });
+
+    var catBtns = catContainer.querySelectorAll('.blog-cat-btn');
     var currentCat = '全部';
     var currentQuery = '';
 
@@ -1202,18 +1249,44 @@
           } else {
             body = body.replace(/</g, '&lt;').replace(/>/g, '&gt;');
           }
+          var userName = c.user ? c.user.login : 'anonymous';
+          var rawQuote = (c.body || '').split('\n').map(function (l) { return '> ' + l; }).join('\n');
           html += '<div class="msg-item">' +
             '<img class="msg-item-avatar" src="' + (c.user ? c.user.avatar_url : '') + '" alt="">' +
             '<div class="msg-item-body">' +
               '<div class="msg-item-header">' +
-                '<span class="msg-item-name">' + (c.user ? c.user.login : 'anonymous') + '</span>' +
+                '<span class="msg-item-name">' + userName + '</span>' +
                 '<span class="msg-item-time">' + new Date(c.created_at).toLocaleString('zh-CN') + '</span>' +
+                '<button class="msg-reply-btn" data-user="' + encodeURIComponent(userName) + '" data-quote="' + encodeURIComponent(rawQuote) + '" title="回复">↩ 回复</button>' +
               '</div>' +
               '<div class="msg-item-content markdown-body">' + body + '</div>' +
             '</div>' +
           '</div>';
         });
         msgList.innerHTML = html;
+        // Bind reply buttons
+        msgList.querySelectorAll('.msg-reply-btn').forEach(function (btn) {
+          btn.addEventListener('click', function () {
+            if (!token) {
+              msgLogin.scrollIntoView({ behavior: 'smooth', block: 'center' });
+              return;
+            }
+            var user = decodeURIComponent(btn.getAttribute('data-user'));
+            var quote = decodeURIComponent(btn.getAttribute('data-quote'));
+            var prefix = '@' + user + '\n' + quote + '\n\n';
+            document.querySelectorAll('.msg-tab-btn').forEach(function (b) { b.classList.remove('active'); });
+            document.querySelector('.msg-tab-btn[data-mode="write"]').classList.add('active');
+            msgTextarea.style.display = '';
+            msgPreview.style.display = 'none';
+            previewMode = 'write';
+            var start = msgTextarea.selectionStart;
+            msgTextarea.value = msgTextarea.value.substring(0, start) + prefix + msgTextarea.value.substring(start);
+            msgTextarea.focus();
+            msgTextarea.setSelectionRange(start + prefix.length, start + prefix.length);
+            msgSubmitBtn.disabled = !msgTextarea.value.trim();
+            msgInputArea.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          });
+        });
       })
       .catch(function () {
         msgList.innerHTML = '<p class="msg-empty">加载失败，请检查留言板配置 (ISSUE_NUMBER)</p>';
