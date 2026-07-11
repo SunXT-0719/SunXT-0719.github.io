@@ -30,6 +30,15 @@
       if (tabTrigger) {
         var tab = document.getElementById('tab-btn-' + tabTrigger.getAttribute('data-open-tab'));
         if (tab) tab.click();
+        var catFilter = tabTrigger.getAttribute('data-cat-filter');
+        if (catFilter) {
+          setTimeout(function () {
+            var catBtns = document.querySelectorAll('.blog-cat-btn');
+            catBtns.forEach(function (btn) {
+              if (btn.getAttribute('data-cat') === catFilter) btn.click();
+            });
+          }, 300);
+        }
       }
     });
   }
