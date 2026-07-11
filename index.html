@@ -9,20 +9,23 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer@1/dist/APlayer.min.css">
 </head>
 <body>
+  <a class="skip-link" href="#main-content">跳到主要内容</a>
+  <div class="reading-progress" aria-hidden="true"><span id="readingProgressBar"></span></div>
   <div id="bg-layer-a"></div>
   <div id="bg-layer-b"></div>
   <!-- Top Bar -->
   <header class="top-bar">
-    <span class="site-name">SunXT's Homepage</span>
+    <button class="site-name" type="button" data-open-tab="about" aria-label="返回主页">SunXT's Homepage</button>
     <nav class="tab-nav" role="tablist">
       <button class="tab-btn active" role="tab" id="tab-btn-about" data-tab="about" aria-selected="true" aria-controls="tab-about">Home</button>
       <button class="tab-btn" role="tab" id="tab-btn-blog" data-tab="blog" aria-selected="false" aria-controls="tab-blog">Blog</button>
       <button class="tab-btn" role="tab" id="tab-btn-messages" data-tab="messages" aria-selected="false" aria-controls="tab-messages">留言</button>
     </nav>
+    <button class="theme-toggle" id="themeToggle" type="button" aria-label="切换明暗主题" title="切换明暗主题">🌙</button>
   </header>
 
   <!-- Main Content -->
-  <main class="main-container">
+  <main class="main-container" id="main-content" tabindex="-1">
 
     <!-- About Tab — Content loaded from sections/about.html -->
     <section class="tab-content active" id="tab-about" role="tabpanel" aria-labelledby="tab-btn-about"></section>
@@ -213,6 +216,7 @@
 
   <script src="https://cdn.jsdelivr.net/npm/aplayer@1/dist/APlayer.min.js"></script>
   <script src="assets/script.js"></script>
+  <script src="assets/site-ui.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <script defer src="https://cloud.umami.is/script.js" data-website-id="d40eb93d-6e4a-4727-bab1-53de4eab7e82"></script>

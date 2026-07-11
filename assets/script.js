@@ -25,6 +25,7 @@
       initBlogFilter();
       initScrollReveal();
       initLightbox();
+      document.dispatchEvent(new CustomEvent('site:sections-ready'));
     });
   }
 
