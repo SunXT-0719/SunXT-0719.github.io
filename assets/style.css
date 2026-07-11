@@ -797,6 +797,18 @@ textarea {
   color: var(--text-primary);
 }
 
+.blog-item-cat {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 500;
+  color: var(--accent);
+  background: var(--tag-bg);
+  padding: 1px 8px;
+  border-radius: 4px;
+  margin-left: 8px;
+  vertical-align: middle;
+}
+
 .blog-item-excerpt {
   font-size: 0.85rem;
   color: var(--text-secondary);

@@ -341,12 +341,19 @@
 
     if (!catContainer || !items.length) return;
 
-    // Count posts per category
+    // Count posts per category & inject category tags into titles
     var catCounts = {};
     var totalCount = items.length;
     items.forEach(function (item) {
       var cat = item.getAttribute('data-category') || '未分类';
       catCounts[cat] = (catCounts[cat] || 0) + 1;
+      var titleEl = item.querySelector('.blog-item-title');
+      if (titleEl && !titleEl.querySelector('.blog-item-cat')) {
+        var tag = document.createElement('span');
+        tag.className = 'blog-item-cat';
+        tag.textContent = cat;
+        titleEl.appendChild(tag);
+      }
     });
 
     // Generate category buttons dynamically
