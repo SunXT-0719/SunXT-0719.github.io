@@ -131,6 +131,7 @@
       { id: 'tab-about', file: 'sections/about.html' },
       { id: 'tab-blog', file: 'sections/blog.html' },
       { id: 'tab-messages', file: 'sections/messages.html' },
+      { id: 'tab-links', file: 'sections/links.html' },
     ];
     return Promise.all(sections.map(function (s) {
       return fetch(s.file)
