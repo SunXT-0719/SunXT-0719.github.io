@@ -1987,6 +1987,8 @@ textarea {
   border-radius: 4px;
   font-size: 0.85em;
   font-family: "SF Mono", "Fira Code", monospace;
+  white-space: pre-wrap;
+  word-break: break-all;
 }
 
 .markdown-body pre {
@@ -1995,11 +1997,14 @@ textarea {
   border-radius: 8px;
   overflow-x: auto;
   margin: 0.6em 0;
+  white-space: pre;
+  word-wrap: normal;
 }
 
 .markdown-body pre code {
   background: none;
   padding: 0;
+  white-space: inherit;
 }
 
 .markdown-body blockquote {

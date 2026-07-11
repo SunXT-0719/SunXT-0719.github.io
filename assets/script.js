@@ -19,6 +19,10 @@
     initTabs();
     initBgGradient();
     initStickyPanel();
+    // Configure marked.js for GFM support
+    if (typeof marked !== 'undefined') {
+      marked.setOptions({ gfm: true, breaks: false });
+    }
     loadSections().then(function () {
       initMusicPlayer();
       initMessages();
