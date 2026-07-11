@@ -22,6 +22,16 @@
     // Configure marked.js for GFM support
     if (typeof marked !== 'undefined') {
       marked.setOptions({ gfm: true, breaks: true });
+      // Custom renderer: code blocks should preserve literal newlines,
+      // not convert them to <br> (which breaks: true does globally).
+      var renderer = new marked.Renderer();
+      var defaultCode = renderer.code.bind(renderer);
+      renderer.code = function (code, language, escaped) {
+        // marked with breaks:true turns \n into <br> in code tokens — undo it
+        var cleaned = code.replace(/<br\s*\/?>/g, '\n');
+        return defaultCode(cleaned, language, true);
+      };
+      marked.setOptions({ renderer: renderer });
     }
     loadSections().then(function () {
       initMusicPlayer();
