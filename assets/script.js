@@ -190,10 +190,12 @@
     function applyTheme(theme) {
       if (theme === 'dark') {
         html.setAttribute('data-theme', 'dark');
-        toggle.textContent = '☀️';
+        toggle.setAttribute('aria-label', '切换到浅色主题');
+        toggle.setAttribute('title', '切换到浅色主题');
       } else {
         html.removeAttribute('data-theme');
-        toggle.textContent = '🌙';
+        toggle.setAttribute('aria-label', '切换到深色主题');
+        toggle.setAttribute('title', '切换到深色主题');
       }
     }
 
@@ -232,7 +234,7 @@
       return document.getElementById('tab-' + tabId);
     }
 
-    function activateTab(button) {
+    function activateTab(button, shouldFocus) {
       var tabId = getTabId(button);
 
       tabButtons.forEach(function (btn) {
@@ -243,7 +245,7 @@
       button.classList.add('active');
       button.setAttribute('aria-selected', 'true');
       button.setAttribute('tabindex', '0');
-      button.focus();
+      if (shouldFocus) button.focus();
 
       tabPanels.forEach(function (panel) {
         panel.classList.remove('active');
@@ -276,7 +278,7 @@
 
     tabButtons.forEach(function (btn) {
       btn.addEventListener('click', function () {
-        activateTab(btn);
+        activateTab(btn, false);
       });
     });
 
@@ -316,7 +318,7 @@
         }
 
         if (target && target !== current) {
-          activateTab(target);
+          activateTab(target, true);
         }
       });
     }
@@ -325,7 +327,7 @@
     if (hash) {
       var targetBtn = document.getElementById('tab-btn-' + hash);
       if (targetBtn) {
-        activateTab(targetBtn);
+        activateTab(targetBtn, false);
       }
     }
   }

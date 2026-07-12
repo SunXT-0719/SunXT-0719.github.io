@@ -21,7 +21,16 @@
       <button class="tab-btn" role="tab" id="tab-btn-links" data-tab="links" aria-selected="false" aria-controls="tab-links">Link</button>
       <button class="tab-btn" role="tab" id="tab-btn-messages" data-tab="messages" aria-selected="false" aria-controls="tab-messages">Comment</button>
     </nav>
-    <button class="theme-toggle" id="themeToggle" type="button" aria-label="切换明暗主题" title="切换明暗主题">🌙</button>
+    <button class="theme-toggle" id="themeToggle" type="button" aria-label="切换到深色主题" title="切换到深色主题">
+      <svg class="theme-icon theme-icon-moon" viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M20.1 15.35A8.35 8.35 0 0 1 8.65 3.9a8.35 8.35 0 1 0 11.45 11.45Z"/>
+        <path class="theme-icon-spark" d="M17.8 3.5v3M16.3 5h3"/>
+      </svg>
+      <svg class="theme-icon theme-icon-sun" viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="12" cy="12" r="3.75"/>
+        <path d="M12 2.75v2M12 19.25v2M2.75 12h2M19.25 12h2M5.46 5.46l1.42 1.42M17.12 17.12l1.42 1.42M18.54 5.46l-1.42 1.42M6.88 17.12l-1.42 1.42"/>
+      </svg>
+    </button>
     <div class="reading-progress" aria-hidden="true"><span id="readingProgressBar"></span></div>
   </header>
 
