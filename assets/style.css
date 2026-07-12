@@ -90,10 +90,10 @@ textarea {
 }
 
 .reading-progress {
-  position: fixed;
-  inset: 0 0 auto;
-  z-index: 120;
-  height: 3px;
+  position: absolute;
+  inset: auto 0 -1px;
+  z-index: 1;
+  height: 2px;
   pointer-events: none;
 }
 
@@ -319,11 +319,28 @@ textarea {
 }
 
 .hero-intro {
+  position: relative;
+  isolation: isolate;
   display: grid;
   justify-items: center;
   gap: 14px;
   padding: 24px;
   text-align: center;
+}
+
+.hero-intro::before {
+  content: '';
+  position: absolute;
+  inset: -42px -72px;
+  z-index: -1;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(13, 12, 31, .5) 0%,
+    rgba(13, 12, 31, .3) 44%,
+    rgba(13, 12, 31, 0) 74%
+  );
+  filter: blur(4px);
+  pointer-events: none;
 }
 
 .hero-kicker,
@@ -349,7 +366,9 @@ textarea {
   font-weight: 300;
   letter-spacing: 0.08em;
   color: rgba(255, 255, 255, 0.9);
-  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+  text-shadow:
+    0 1px 1px rgba(7, 7, 18, .8),
+    0 4px 24px rgba(7, 7, 18, .72);
   text-align: center;
   font-family: "Noto Serif SC", "Georgia", serif;
 }
@@ -362,6 +381,7 @@ textarea {
   border: none;
   border-radius: 0;
   color: rgba(255, 255, 255, .85);
+  text-shadow: 0 2px 12px rgba(7, 7, 18, .78);
   background: none;
   box-shadow: none;
   font: inherit;
@@ -1049,7 +1069,7 @@ textarea {
 /* === Responsive === */
 @media (max-width: 480px) {
   body {
-    padding: 88px 12px 32px;
+    padding: 88px 12px calc(88px + env(safe-area-inset-bottom));
   }
 
   .top-bar {
@@ -1058,10 +1078,13 @@ textarea {
   }
 
   .site-name {
-    max-width: 112px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    font-size: .82rem;
+    font-size: 0;
+  }
+
+  .site-name::after {
+    content: 'SunXT';
+    font-size: .8rem;
+    letter-spacing: .01em;
   }
 
   .tab-nav {
@@ -1668,6 +1691,11 @@ textarea {
     border-top: 1px solid var(--card-border);
     border-radius: 0;
     z-index: 90;
+  }
+
+  .side-panel.stuck {
+    top: auto;
+    bottom: 0;
   }
 
   .side-widget {
