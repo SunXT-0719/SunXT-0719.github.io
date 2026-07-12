@@ -1030,6 +1030,13 @@ textarea {
   margin-bottom: 20px;
 }
 
+.course-orbit-cover {
+  aspect-ratio: 1;
+  max-height: 420px;
+  object-fit: contain;
+  background: #f6f4ee;
+}
+
 .blog-detail-cover[src=""],
 .blog-detail-cover:not([src]),
 .blog-detail-cover[data-hidden] {
