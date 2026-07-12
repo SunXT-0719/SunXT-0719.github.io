@@ -1263,7 +1263,20 @@ textarea {
   bottom: 24px;
 }
 
-@media (min-width: 1280px) {
+@media (min-width: 1280px) and (max-width: 1520px) {
+  .main-container {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .side-panel {
+    right: 20px;
+    left: calc(50% + 360px);
+    width: auto;
+  }
+}
+
+@media (min-width: 1521px) {
   .main-container {
     margin-left: auto;
     margin-right: auto;
@@ -1271,7 +1284,8 @@ textarea {
 
   .side-panel {
     right: auto;
-    left: calc(50% + 360px);
+    left: calc(75% - 20px);
+    width: 380px;
   }
 }
 
