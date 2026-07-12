@@ -981,8 +981,19 @@ textarea {
 
 .footer-counter {
   display: flex;
+  align-items: center;
   justify-content: center;
-  gap: 16px;
+  gap: 8px;
+  font-variant-numeric: tabular-nums;
+}
+
+.footer-counter-value {
+  color: var(--text-primary);
+  font-weight: 650;
+}
+
+.footer-counter-divider {
+  color: var(--divider);
 }
 
 .footer-cv {

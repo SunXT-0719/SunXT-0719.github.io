@@ -5,6 +5,8 @@
     var progress = document.getElementById('readingProgressBar');
     var topBar = document.querySelector('.top-bar');
 
+    initVisitCounter();
+
     function updateScrollState() {
       var scrollable = document.documentElement.scrollHeight - window.innerHeight;
       var ratio = scrollable > 0 ? Math.min(1, window.scrollY / scrollable) : 0;
@@ -41,6 +43,35 @@
         }
       }
     });
+  }
+
+  function initVisitCounter() {
+    var counter = document.getElementById('footerCounter');
+    var uv = document.getElementById('busuanzi_site_uv');
+    var pv = document.getElementById('busuanzi_site_pv');
+    if (!counter || !uv || !pv) return;
+
+    function isCount(value) {
+      return /^\d[\d,]*$/.test(value);
+    }
+
+    function syncCounterState() {
+      [uv, pv].forEach(function (element) {
+        var value = element.textContent.trim();
+        if (value !== '—' && !isCount(value)) {
+          element.textContent = '—';
+        }
+      });
+
+      var loaded = isCount(uv.textContent.trim()) && isCount(pv.textContent.trim());
+      counter.classList.toggle('is-loaded', loaded);
+      counter.title = loaded ? '全站独立访客与页面访问次数' : '访问计数服务暂不可用';
+    }
+
+    var observer = new MutationObserver(syncCounterState);
+    observer.observe(uv, { childList: true, characterData: true, subtree: true });
+    observer.observe(pv, { childList: true, characterData: true, subtree: true });
+    syncCounterState();
   }
 
   document.addEventListener('site:sections-ready', init, { once: true });

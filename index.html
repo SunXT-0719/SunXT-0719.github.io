@@ -52,7 +52,11 @@
   </main>
 
   <footer class="footer">
-    <span class="footer-counter" id="footerCounter">加载计数…</span>
+    <span class="footer-counter" id="footerCounter" aria-live="polite">
+      <span>访客 <strong id="busuanzi_site_uv" class="footer-counter-value">—</strong></span>
+      <span class="footer-counter-divider" aria-hidden="true">·</span>
+      <span>访问 <strong id="busuanzi_site_pv" class="footer-counter-value">—</strong></span>
+    </span>
   </footer>
 
   <!-- Side Panel -->
@@ -232,6 +236,7 @@
   <script src="assets/site-ui.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script defer src="https://cdn.busuanzi.cc/busuanzi/3.6.9/busuanzi.min.js"></script>
   <script defer src="https://cloud.umami.is/script.js" data-website-id="d40eb93d-6e4a-4727-bab1-53de4eab7e82"></script>
 </body>
 </html>
