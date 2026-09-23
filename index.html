@@ -6,7 +6,7 @@
   <title>SunXT's Homepage</title>
   <link rel="icon" href="assets/images/avatar.jpg">
   <link rel="stylesheet" href="assets/style.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer@1/dist/APlayer.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.css">
 </head>
 <body>
   <a class="skip-link" href="#main-content">跳到主要内容</a>
@@ -67,12 +67,14 @@
       <div class="player-aplayer-wrap" style="display:none">
         <div class="aplayer-slot active" id="pl-favorite">
           <meting-js server="netease" type="playlist" id="497691453"
+            api="https://music.yuncan.xyz/api?server=:server&amp;type=:type&amp;id=:id&amp;r=:r"
             autoplay="false" loop="all" order="list" preload="none"
             list-folded="true" lrc-type="0" list-max-height="300px">
           </meting-js>
         </div>
         <div class="aplayer-slot" id="pl-subahibi">
           <meting-js server="netease" type="playlist" id="141293294"
+            api="https://music.yuncan.xyz/api?server=:server&amp;type=:type&amp;id=:id&amp;r=:r"
             autoplay="false" loop="all" order="list" preload="none"
             list-folded="true" lrc-type="0" list-max-height="300px">
           </meting-js>
@@ -231,10 +233,10 @@
     <img id="lightbox-img" src="" alt="头像大图">
   </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/aplayer@1/dist/APlayer.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.js"></script>
   <script src="assets/script.js"></script>
   <script src="assets/site-ui.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/meting@2.0.2/dist/Meting.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <script defer src="https://cdn.busuanzi.cc/busuanzi/3.6.9/busuanzi.min.js"></script>
   <script defer src="https://cloud.umami.is/script.js" data-website-id="d40eb93d-6e4a-4727-bab1-53de4eab7e82"></script>

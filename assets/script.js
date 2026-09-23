@@ -4,6 +4,8 @@
   // Saved blog list HTML — when viewing a post in SPA mode, the list
   // is saved here so we can restore it when switching back to Blog tab.
   var blogListSaved = null;
+  // Reassigned by initScrollReveal once the asynchronously loaded sections exist.
+  var requestRevealRefresh = function () {};
 
   /* ===================================================
      Initialization
@@ -82,6 +84,7 @@
           if (cm && sm) vc++;
         });
         if (emptyState) emptyState.style.display = vc === 0 ? '' : 'none';
+        requestRevealRefresh();
       }
       catBtns.forEach(function (btn) {
         btn.addEventListener('click', function () {
@@ -99,6 +102,7 @@
       }
     }
     history.replaceState(null, '', '#blog');
+    requestRevealRefresh();
   }
 
   /* ---- Gradient background: bgA → bgB over 1 screen scroll ---- */
@@ -253,6 +257,7 @@
       var panel = getPanel(tabId);
       if (panel) {
         panel.classList.add('active');
+        requestRevealRefresh();
       }
 
       if (window.location.hash !== '#' + tabId) {
@@ -399,6 +404,9 @@
       if (emptyState) {
         emptyState.style.display = visibleCount === 0 ? '' : 'none';
       }
+      // Filtering can move a formerly off-screen card into the viewport. Re-run
+      // reveal on the next frame so the card does not wait for a scroll event.
+      requestRevealRefresh();
     }
 
     catBtns.forEach(function (btn) {
@@ -472,11 +480,13 @@
      4. Scroll Reveal
      =================================================== */
   function initScrollReveal() {
-    var revealElements = document.querySelectorAll('.reveal');
-    if (revealElements.length === 0) return;
-
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      revealElements.forEach(function (el) { el.classList.add('visible'); });
+      requestRevealRefresh = function () {
+        document.querySelectorAll('.reveal').forEach(function (el) {
+          el.classList.add('visible');
+        });
+      };
+      requestRevealRefresh();
       return;
     }
 
@@ -485,11 +495,13 @@
     function checkVisibility() {
       var windowHeight = window.innerHeight;
 
-      revealElements.forEach(function (el) {
+      // Query on every pass because the Blog list can be replaced in SPA mode.
+      document.querySelectorAll('.reveal').forEach(function (el) {
         if (el.classList.contains('visible')) return;
+        if (el.offsetParent === null) return;
 
         var rect = el.getBoundingClientRect();
-        if (rect.top < windowHeight - OFFSET) {
+        if (rect.top < windowHeight - OFFSET && rect.bottom > 0) {
           el.classList.add('visible');
         }
       });
@@ -497,7 +509,7 @@
 
     var ticking = false;
 
-    window.addEventListener('scroll', function () {
+    function scheduleCheck() {
       if (!ticking) {
         requestAnimationFrame(function () {
           checkVisibility();
@@ -505,17 +517,13 @@
         });
         ticking = true;
       }
-    });
+    }
 
-    window.addEventListener('resize', function () {
-      if (!ticking) {
-        requestAnimationFrame(function () {
-          checkVisibility();
-          ticking = false;
-        });
-        ticking = true;
-      }
-    });
+    requestRevealRefresh = scheduleCheck;
+
+    window.addEventListener('scroll', scheduleCheck, { passive: true });
+
+    window.addEventListener('resize', scheduleCheck, { passive: true });
 
     checkVisibility();
   }
@@ -537,9 +545,10 @@
     if (!options.length) return;
 
     var currentPl = 'favorite';
-    var TIMEOUT = 15000;
+    var TIMEOUT = 6000;
     var POLL_INTERVAL = 250;
     var readySlots = {};
+    var fallbackLoads = {};
     var dropdownOpen = false;
     var activePlayer = null;
     var isDraggingProgress = false;
@@ -646,16 +655,16 @@
       var muted = audio.muted;
 
       // Cover
-      if (cur && cur.cover) {
-        coverEl.src = cur.cover;
+      if (cur && (cur.cover || cur.pic)) {
+        coverEl.src = cur.cover || cur.pic;
       } else {
         coverEl.src = '';
       }
 
       // Song name & artist
       if (cur) {
-        nameEl.textContent = cur.title || '未知歌曲';
-        artistEl.textContent = cur.author || cur.artist || '--';
+        nameEl.textContent = cur.name || cur.title || '未知歌曲';
+        artistEl.textContent = cur.artist || cur.author || '--';
       }
 
       // Status icon
@@ -742,7 +751,50 @@
       });
       audio.addEventListener('loadedmetadata', syncUI);
       audio.addEventListener('volumechange', syncUI);
-      audio.addEventListener('error', function () { syncUI(); });
+      audio.addEventListener('error', function () {
+        var cur = activePlayer && activePlayer.list
+          ? activePlayer.list.audios[activePlayer.list.index]
+          : null;
+        if (cur && !cur._directFallbackTried) {
+          var fallbackUrl = cur.fallbackUrl || '';
+          if (!fallbackUrl && cur.url) {
+            var idMatch = String(cur.url).match(/[?&]id=(\d+)/);
+            if (idMatch) {
+              fallbackUrl = 'https://music.163.com/song/media/outer/url?id=' + idMatch[1] + '.mp3';
+            }
+          }
+          if (fallbackUrl && fallbackUrl !== audio.src) {
+            cur._directFallbackTried = true;
+            cur._resumeAfterFallback = !audio.paused;
+            cur.url = fallbackUrl;
+            audio.src = fallbackUrl;
+            audio.load();
+            if (cur._resumeAfterFallback) {
+              var retryPlay = audio.play();
+              if (retryPlay && retryPlay.catch) retryPlay.catch(function () {});
+            }
+            syncUI();
+            return;
+          }
+        }
+
+        // If both the API URL and NetEase's direct URL fail (for example for a
+        // restricted track), advance once instead of leaving the controls stuck.
+        if (cur && cur._directFallbackTried && !cur._skipAfterError) {
+          cur._skipAfterError = true;
+          var shouldResume = cur._resumeAfterFallback;
+          setTimeout(function () {
+            if (!activePlayer) return;
+            activePlayer.skipForward();
+            if (shouldResume) {
+              var nextPlay = activePlayer.play();
+              if (nextPlay && nextPlay.catch) nextPlay.catch(function () {});
+            }
+            syncUI();
+          }, 0);
+        }
+        syncUI();
+      });
 
       // APlayer list switch event — rebuild playlist content
       if (activePlayer.on) {
@@ -865,9 +917,18 @@
       list.audios.forEach(function (audio, i) {
         var li = document.createElement('li');
         if (i === curIdx) li.classList.add('cur');
-        li.innerHTML = '<span class="player-list-index">' + (i + 1) + '</span>' +
-          '<span class="player-list-title">' + (audio.title || '未知歌曲') + '</span>' +
-          '<span class="player-list-author">' + (audio.author || audio.artist || '') + '</span>';
+        var indexEl = document.createElement('span');
+        indexEl.className = 'player-list-index';
+        indexEl.textContent = String(i + 1);
+        var titleEl = document.createElement('span');
+        titleEl.className = 'player-list-title';
+        titleEl.textContent = audio.name || audio.title || '未知歌曲';
+        var authorEl = document.createElement('span');
+        authorEl.className = 'player-list-author';
+        authorEl.textContent = audio.artist || audio.author || '';
+        li.appendChild(indexEl);
+        li.appendChild(titleEl);
+        li.appendChild(authorEl);
         li.addEventListener('click', function () {
           activePlayer.list.switch(i);
           activePlayer.play();
@@ -918,7 +979,57 @@
       }
     });
 
-    /* ---- Wait for MetingJS to create APlayer ---- */
+    /* ---- Local playlist cache fallback ---- */
+    function loadFallbackPlayer(key) {
+      if (fallbackLoads[key]) return fallbackLoads[key];
+
+      fallbackLoads[key] = fetch('assets/data/music-playlists.json')
+        .then(function (response) {
+          if (!response.ok) throw new Error('Playlist cache HTTP ' + response.status);
+          return response.json();
+        })
+        .then(function (playlists) {
+          var slot = document.getElementById('pl-' + key);
+          if (!slot) throw new Error('Slot not found: ' + key);
+
+          // The live provider may have recovered while the cache was loading.
+          var meting = slot.querySelector('meting-js');
+          if (meting && meting.aplayer) {
+            readySlots[key] = true;
+            return key;
+          }
+
+          var audio = playlists[key];
+          if (!Array.isArray(audio) || audio.length === 0) {
+            throw new Error('Cached playlist is empty: ' + key);
+          }
+          if (typeof APlayer === 'undefined') {
+            throw new Error('APlayer is unavailable');
+          }
+
+          var container = document.createElement('div');
+          container.className = 'aplayer-fallback';
+          slot.appendChild(container);
+          slot._fallbackAPlayer = new APlayer({
+            container: container,
+            audio: audio,
+            autoplay: false,
+            loop: 'all',
+            order: 'list',
+            preload: 'none',
+            lrcType: 0,
+            mutex: true,
+            storageName: 'metingjs-fallback-' + key
+          });
+          readySlots[key] = true;
+          console.warn('Music playlist loaded from local cache:', key);
+          return key;
+        });
+
+      return fallbackLoads[key];
+    }
+
+    /* ---- Wait for MetingJS to create APlayer, then fall back locally ---- */
     function waitForPlayer(key, timeout) {
       return new Promise(function (resolve, reject) {
         var slot = document.getElementById('pl-' + key);
@@ -940,7 +1051,7 @@
           }
           if (Date.now() - started > timeout) {
             clearInterval(timer);
-            return reject(new Error('Timeout: ' + key));
+            loadFallbackPlayer(key).then(resolve).catch(reject);
           }
         }, POLL_INTERVAL);
       });
@@ -950,7 +1061,8 @@
       var slot = document.getElementById('pl-' + key);
       if (!slot) return null;
       var meting = slot.querySelector('meting-js');
-      return meting && meting.aplayer ? meting.aplayer : null;
+      if (meting && meting.aplayer) return meting.aplayer;
+      return slot._fallbackAPlayer || null;
     }
 
     /* ---- Switch playlist ---- */
